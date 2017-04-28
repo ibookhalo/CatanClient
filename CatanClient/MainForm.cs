@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -24,6 +25,27 @@ namespace CatanClient
                 Close();
             }
         }
-        
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrWhiteSpace(tbServerIPAddress.Text) || string.IsNullOrWhiteSpace(tbPassword.Text) || string.IsNullOrWhiteSpace(tbNickname.Text))
+            {
+                MessageBox.Show("Bitte alle Felder ausfüllen !", "Felder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+              
+                IPAddress serverIp;
+                if (IPAddress.TryParse(tbServerIPAddress.Text, out serverIp))
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Bitte eine gültige Server-Adresse eingeben !", "Ungültige Adresse", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
