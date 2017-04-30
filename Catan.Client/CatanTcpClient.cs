@@ -7,29 +7,34 @@ using System.Text;
 
 namespace Catan.Client
 {
-    class CatanTcpClient
+    public class CatanTcpClient
     {
-        private TcpClient tcpClient;
+        public TcpClient TcpClient { private set; get; }
         private IPAddress serverIpAddress;
         private const ushort SERVER_PORT = 123;
 
         public CatanTcpClient(IPAddress serverIpAddress)
         {
-            this.tcpClient = new TcpClient();
+            this.TcpClient = new TcpClient();
             this.serverIpAddress = serverIpAddress;
         }
 
-        public void Connect()
+        public void ConnectAsync()
         {
             try
             {
-                tcpClient.Connect(serverIpAddress, SERVER_PORT);
-
+                TcpClient.BeginConnect(serverIpAddress, SERVER_PORT, connectCallback, null);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        private void connectCallback(IAsyncResult ar)
+        {
+            TcpClient.EndConnect(ar);
+
         }
     }
 }

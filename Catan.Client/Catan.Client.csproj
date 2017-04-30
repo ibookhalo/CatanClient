@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cartan.Network">
-      <HintPath>..\..\CartanServer\Catan.Network\bin\Debug\Cartan.Network.dll</HintPath>
+    <Reference Include="Catan.Network">
+      <HintPath>..\..\CatanServer\Catan.Network\bin\Debug\Catan.Network.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -1,4 +1,4 @@
-﻿namespace CatanClient
+﻿namespace CatanClient.UI
 {
     partial class MainForm
     {
