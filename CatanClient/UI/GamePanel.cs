@@ -13,59 +13,7 @@ namespace CatanClient.UI
             Paint += GamePanel_Paint;
             MouseClick += GamePanel_MouseClick;
         }
-        private void PointToHex(float x, float y, float height,out int row, out int col)
-        {
-            // Find the test rectangle containing the point.
-            float width = HexWidth(height);
-            col = (int)(x / (width * 0.75f));
 
-            if (col % 2 == 0)
-                row = (int)(y / height);
-            else
-                row = (int)((y - height / 2) / height);
-
-            // Find the test area.
-            float testx = col * width * 0.75f;
-            float testy = row * height;
-            if (col % 2 == 1) testy += height / 2;
-
-            // See if the point is above or
-            // below the test hexagon on the left.
-            bool is_above = false, is_below = false;
-            float dx = x - testx;
-            if (dx < width / 4)
-            {
-                float dy = y - (testy + height / 2);
-                if (dx < 0.001)
-                {
-                    // The point is on the left edge of the test rectangle.
-                    if (dy < 0) is_above = true;
-                    if (dy > 0) is_below = true;
-                }
-                else if (dy < 0)
-                {
-                    // See if the point is above the test hexagon.
-                    if (-dy / dx > Math.Sqrt(3)) is_above = true;
-                }
-                else
-                {
-                    // See if the point is below the test hexagon.
-                    if (dy / dx > Math.Sqrt(3)) is_below = true;
-                }
-            }
-
-            // Adjust the row and column if necessary.
-            if (is_above)
-            {
-                if (col % 2 == 0) row--;
-                col--;
-            }
-            else if (is_below)
-            {
-                if (col % 2 == 1) row++;
-                col--;
-            }
-        }
         private void GamePanel_MouseClick(object sender, MouseEventArgs e)
         {
             int row, col;
