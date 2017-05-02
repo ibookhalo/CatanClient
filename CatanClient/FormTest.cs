@@ -22,7 +22,7 @@ namespace CatanClient
       
 
         private Point[] getHex(int hexHeight,int hexWidth,int x, int y,int penWidth)
-        {
+        
             int top = (int)(hexHeight * 0.25f);
             y += penWidth/2;
             x += penWidth/2;
