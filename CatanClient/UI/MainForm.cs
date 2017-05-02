@@ -1,6 +1,5 @@
 ﻿using Catan.Client;
 using Catan.Network.Messaging;
-using Catan.Network.Messaging.ClientMessages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,6 +30,12 @@ namespace CatanClient.UI
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
+            Controls.Clear();
+
+            GamePanel catanGamePanel = new GamePanel();
+            Controls.Add(catanGamePanel);
+
+            return;
 
             if (string.IsNullOrWhiteSpace(tbServerIPAddress.Text) || string.IsNullOrWhiteSpace(tbPassword.Text) || string.IsNullOrWhiteSpace(tbNickname.Text))
             {
@@ -41,14 +46,7 @@ namespace CatanClient.UI
                 IPAddress serverIp;
                 if (IPAddress.TryParse(tbServerIPAddress.Text, out serverIp))
                 {
-                    try
-                    {
-                        connectToServer(serverIp);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBoxHelper.ShowErrorMessage(ex);
-                    }
+                   connectToServerAsync(serverIp);
                 }
                 else
                 {
@@ -56,33 +54,55 @@ namespace CatanClient.UI
                 }
             }
         }
-        private void connectToServer(IPAddress serverIp)
+        private void connectToServerAsync(IPAddress serverIp)
         {
             try
             {
+                setUIMode(true);
+
                 CatanTcpClient catanClient = new CatanTcpClient(serverIp);
-                catanClient.ConnectAsync();
-
-
-
-                /*
-                NetworkMessageWriter netMessageWriter = new NetworkMessageWriter(catanClient.TcpClient);
-                netMessageWriter.WriteCompleted += NetMessageWriter_WriteCompleted;
-                netMessageWriter.WriteError += NetMessageWriter_WriteError;
-                netMessageWriter.WriteAsync(new CatanClientAuthenticationMessage(tbPassword.Text, tbNickname.Text));
-                */
+                catanClient.ClientConnectedToServerSuccessfully += CatanClient_ClientConnectedToServerSuccessfully;
+                catanClient.ClientConnectedToServerError += CatanClient_ClientConnectedToServerError;
+                catanClient.ConnectToCatanServerAsync(new CatanClientAuthenticationMessage(tbPassword.Text,tbNickname.Text));
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        private void NetMessageWriter_WriteError(object obj, Catan.Network.Events.NetworkMessageWriterWriteErrorEventArgs e)
+        private void setUIMode(bool isLoading)
+        {
+            pbLoading.Visible = isLoading;
+            btnConnect.Visible = !isLoading;
+            tbNickname.Enabled = tbPassword.Enabled = tbServerIPAddress.Enabled = !isLoading;
+        }
+        private void CatanClient_ClientConnectedToServerError(object obj, Catan.Client.EventArgs.ClientConnectedToServerErrorEventArgs e)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                setUIMode(false);
+            });
+            MessageBoxHelper.ShowErrorMessage(e.Exception);
+        }
+
+        private void CatanClient_ClientConnectedToServerSuccessfully(object obj, EventArgs e)
+        {
+            // initGame
+            Invoke((MethodInvoker)delegate
+            {
+                Controls.Clear();
+
+                GamePanel catanGamePanel = new GamePanel();
+                Controls.Add(catanGamePanel);
+            });
+        }
+
+        private void NetMessageWriter_WriteError(object obj, Catan.Network.EventArgs.NetworkMessageWriterWriteErrorEventArgs e)
         {
             MessageBoxHelper.ShowErrorMessage(e.Exception);
         }
 
-        private void NetMessageWriter_WriteCompleted(object obj, Catan.Network.Events.NetworkMessageWriterWriteCompletedEventArgs e)
+        private void NetMessageWriter_WriteCompleted(object obj, Catan.Network.EventArgs.NetworkMessageWriterWriteCompletedEventArgs e)
         {
             // Auth OK
 

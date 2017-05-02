@@ -36,6 +36,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.tbNickname = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.pbLoading = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -56,7 +58,7 @@
             this.tbServerIPAddress.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbServerIPAddress.Font = new System.Drawing.Font("OCR A Extended", 32F);
             this.tbServerIPAddress.Location = new System.Drawing.Point(370, 226);
-            this.tbServerIPAddress.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbServerIPAddress.Margin = new System.Windows.Forms.Padding(2);
             this.tbServerIPAddress.MaxLength = 14;
             this.tbServerIPAddress.Name = "tbServerIPAddress";
             this.tbServerIPAddress.Size = new System.Drawing.Size(324, 45);
@@ -69,7 +71,7 @@
             this.tbPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbPassword.Font = new System.Drawing.Font("OCR A Extended", 32F);
             this.tbPassword.Location = new System.Drawing.Point(370, 304);
-            this.tbPassword.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(2);
             this.tbPassword.MaxLength = 10;
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(324, 45);
@@ -92,7 +94,7 @@
             this.btnConnect.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnConnect.Font = new System.Drawing.Font("Papyrus", 36F, System.Drawing.FontStyle.Bold);
             this.btnConnect.Location = new System.Drawing.Point(223, 488);
-            this.btnConnect.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnConnect.Margin = new System.Windows.Forms.Padding(2);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(341, 73);
             this.btnConnect.TabIndex = 4;
@@ -112,7 +114,7 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Catan FB4";
             // 
-            // textBox1
+            // tbNickname
             // 
             this.tbNickname.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -121,7 +123,7 @@
             this.tbNickname.Location = new System.Drawing.Point(370, 382);
             this.tbNickname.Margin = new System.Windows.Forms.Padding(2);
             this.tbNickname.MaxLength = 24;
-            this.tbNickname.Name = "textBox1";
+            this.tbNickname.Name = "tbNickname";
             this.tbNickname.Size = new System.Drawing.Size(324, 45);
             this.tbNickname.TabIndex = 3;
             // 
@@ -136,12 +138,25 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Nickname:";
             // 
+            // pbLoading
+            // 
+            this.pbLoading.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pbLoading.Image = global::CatanClient.Properties.Resources.loading_apple;
+            this.pbLoading.Location = new System.Drawing.Point(327, 463);
+            this.pbLoading.Name = "pbLoading";
+            this.pbLoading.Size = new System.Drawing.Size(156, 120);
+            this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLoading.TabIndex = 7;
+            this.pbLoading.TabStop = false;
+            this.pbLoading.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SandyBrown;
             this.ClientSize = new System.Drawing.Size(806, 595);
+            this.Controls.Add(this.pbLoading);
             this.Controls.Add(this.tbNickname);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -151,11 +166,12 @@
             this.Controls.Add(this.tbServerIPAddress);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -171,6 +187,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbNickname;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.PictureBox pbLoading;
     }
 }
 
