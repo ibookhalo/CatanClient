@@ -54,6 +54,7 @@
     <Compile Include="UI\GamePanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="UI\Hexagone.cs" />
     <Compile Include="UI\MessageBoxHelper.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>
