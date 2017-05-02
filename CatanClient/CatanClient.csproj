@@ -57,6 +57,7 @@
     <Compile Include="FormTest.Designer.cs">
       <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\CatanHexagonGridGenerator.cs" />
     <Compile Include="UI\Edge.cs" />
     <Compile Include="UI\GamePanel.cs">
       <SubType>Component</SubType>

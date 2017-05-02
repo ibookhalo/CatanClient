@@ -8,10 +8,10 @@ namespace CatanClient.UI
 {
     abstract class Texture
     {
-        protected int X {  set; get; }
-        protected int Y {  set; get; }
-        protected int Height { set; get; }
-        protected int Width { set; get; }
+        public int X { protected set; get; }
+        public int Y { protected set; get; }
+        public int Height { protected set; get; }
+        public int Width { protected set; get; }
 
 
         public Texture(int x, int y,int height, int width)

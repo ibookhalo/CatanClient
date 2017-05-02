@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel = new System.Windows.Forms.Panel();
+            this.panelImages = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // panel
             // 
-            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel.Location = new System.Drawing.Point(0, 0);
-            this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(896, 563);
-            this.panel.TabIndex = 0;
+            this.panelImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelImages.Location = new System.Drawing.Point(0, 0);
+            this.panelImages.Name = "panel";
+            this.panelImages.Size = new System.Drawing.Size(896, 563);
+            this.panelImages.TabIndex = 0;
             // 
             // FormTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(896, 563);
-            this.Controls.Add(this.panel);
+            this.Controls.Add(this.panelImages);
             this.Name = "FormTest";
             this.Text = "FormTest";
             this.ResumeLayout(false);
@@ -53,6 +53,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.Panel panelImages;
     }
 }
