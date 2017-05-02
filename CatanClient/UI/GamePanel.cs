@@ -16,9 +16,7 @@ namespace CatanClient.UI
 
         private void GamePanel_MouseClick(object sender, MouseEventArgs e)
         {
-            int row, col;
-            PointToHex(e.X, e.Y, 100,out row,out col);
-            Console.WriteLine($"Row {row}, Col {col}");
+           
         }
 
         private float HexWidth(float height)

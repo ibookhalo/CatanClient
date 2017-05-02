@@ -1,28 +1,34 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CatanClient.UI
 {
-    class Hexagone
+    class Hexagone:Texture
     {
-        private Point[] getHex(int hexHeight, int hexWidth, int x, int y, int penWidth)
-        {
-            int top = (int)(hexHeight * 0.25f);
-            y += penWidth / 2;
-            x += penWidth / 2;
+        public List<Edge> Edges { private set; get; }
+        public Point[] Points { get { return new Point[] {Edges[0].Point1, Edges[1].Point1, Edges[2].Point1, Edges[3].Point1, Edges[4].Point1, Edges[5].Point1 }; } }
 
-            Point a = new Point((x + hexWidth / 2), y);
-            Point b = new Point(a.X + (hexWidth / 2), a.Y + top);
-            Point c = new Point(b.X, b.Y + (int)(hexHeight * 0.5f));
+        public Hexagone(int x, int y, int height, int width,int drawPenWidth) : base(x, y, height, width)
+        {
+            this.Edges = new List<Edge>();
+            int top = (int)(height * 0.25f);
+            y += drawPenWidth / 2;
+            x += drawPenWidth / 2;
+
+            Point a = new Point((x + width / 2), y);
+            Point b = new Point(a.X + (width / 2), a.Y + top);
+            Point c = new Point(b.X, b.Y + (int)(height * 0.5f));
             Point d = new Point(a.X, c.Y + (top));
             Point e = new Point(x, c.Y);
             Point f = new Point(e.X, b.Y);
 
-            return new Point[] { a, b, c, d, e, f };
+            Edges.Add(new Edge(a,b));
+            Edges.Add(new Edge(b, c));
+            Edges.Add(new Edge(c, d));
+            Edges.Add(new Edge(d, e));
+            Edges.Add(new Edge(e, f));
+            Edges.Add(new Edge(f, a));
         }
     }
 }

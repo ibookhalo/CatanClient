@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gamePanel = new System.Windows.Forms.Panel();
+            this.panel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // gamePanel
+            // panel
             // 
-            this.gamePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gamePanel.Location = new System.Drawing.Point(0, 0);
-            this.gamePanel.Name = "gamePanel";
-            this.gamePanel.Size = new System.Drawing.Size(824, 489);
-            this.gamePanel.TabIndex = 0;
+            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel.Location = new System.Drawing.Point(0, 0);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(896, 563);
+            this.panel.TabIndex = 0;
             // 
             // FormTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(824, 489);
-            this.Controls.Add(this.gamePanel);
+            this.ClientSize = new System.Drawing.Size(896, 563);
+            this.Controls.Add(this.panel);
             this.Name = "FormTest";
             this.Text = "FormTest";
             this.ResumeLayout(false);
@@ -53,6 +53,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel gamePanel;
+        private System.Windows.Forms.Panel panel;
     }
 }
