@@ -107,7 +107,6 @@ namespace CatanClient
             {
                 for (int columnIndex = 0; columnIndex < hexGrid[rowIndex].GetLength(0); columnIndex++)
                 {
-                    
                     e.Graphics.DrawImage(bitmap, hexGrid[rowIndex][columnIndex].X, hexGrid[rowIndex][columnIndex].Y);
                     e.Graphics.DrawPolygon(new Pen(Color.Black, penWidth), hexGrid[rowIndex][columnIndex].Points);
                 }

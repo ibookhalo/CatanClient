@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Catan.Network">
-      <HintPath>..\..\CatanServer\Catan.Network\bin\Debug\Catan.Network.dll</HintPath>
+      <HintPath>..\..\CartanServer\Catan.Network\bin\Debug\Catan.Network.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -102,7 +102,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\test.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Catan.Client\Catan.Client.csproj">
       <Project>{C65CB373-9B88-4B59-8E0A-009F40F3CDFB}</Project>
