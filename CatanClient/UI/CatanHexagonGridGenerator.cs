@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace CatanClient.UI
 {
     static class CatanHexagonGridGenerator
     {
-        public static Hexagone[][] GetCatanHexagoneGrid(int x,int y,int height, int width,int penDrawWidth)
+        public static Hexagone[][] GetCatanHexagoneGrid(int x,int y,int height, int width,Pen pen,Image backgroundImage)
         {
             // 7 Rows
             Hexagone[][] hexGrid = new Hexagone[7][];
@@ -30,17 +31,17 @@ namespace CatanClient.UI
                     if (columnIndex>0)
                         xTemp += width;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagone(xTemp, yTemp, height, width, penDrawWidth);
+                    hexGrid[rowIndex][columnIndex] = new Hexagone(xTemp, yTemp, height, width,pen,backgroundImage);
                 }
                 if (rowIndex<3)
                 {
-                    xTemp = hexGrid[rowIndex][0].Points[4].X - (width / 2)-penDrawWidth/2;
-                    yTemp = hexGrid[rowIndex][0].Points[4].Y-penDrawWidth/2;
+                    xTemp = hexGrid[rowIndex][0].Points[4].X - (width / 2);
+                    yTemp = hexGrid[rowIndex][0].Points[4].Y;
                 }
                 else
                 {
-                    xTemp = hexGrid[rowIndex][0].Points[4].X + (width / 2)-penDrawWidth/2;
-                    yTemp = hexGrid[rowIndex][0].Points[4].Y-penDrawWidth/2;
+                    xTemp = hexGrid[rowIndex][0].Points[4].X + (width / 2);
+                    yTemp = hexGrid[rowIndex][0].Points[4].Y;
                 }
             }
            

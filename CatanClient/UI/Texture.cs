@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,6 @@ namespace CatanClient.UI
             this.Height = height;
             this.Width = width;
         }
-
+        public abstract void Draw(Graphics graphics);
     }
 }

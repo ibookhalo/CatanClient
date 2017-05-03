@@ -63,6 +63,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\Hexagone.cs" />
+    <Compile Include="UI\ImageHelper.cs" />
     <Compile Include="UI\MessageBoxHelper.cs" />
     <Compile Include="UI\MainForm.cs">
       <SubType>Form</SubType>

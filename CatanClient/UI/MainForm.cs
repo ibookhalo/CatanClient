@@ -30,12 +30,7 @@ namespace CatanClient.UI
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            Controls.Clear();
-
-            GamePanel catanGamePanel = new GamePanel();
-            Controls.Add(catanGamePanel);
-
-            return;
+           
 
             if (string.IsNullOrWhiteSpace(tbServerIPAddress.Text) || string.IsNullOrWhiteSpace(tbPassword.Text) || string.IsNullOrWhiteSpace(tbNickname.Text))
             {
