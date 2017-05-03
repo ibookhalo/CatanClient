@@ -18,25 +18,33 @@ namespace CatanClient.UI
         }
         private void Panel_Paint(object sender, PaintEventArgs e)
         {
-            if (backgroundHexagon==null)
-            {
-                backgroundHexagon = new Hexagon(Panel.Width / 2 - (Panel.Height / 2), 0, Panel.Height, Panel.Height, new Pen(Color.Black, 5), null);
-            }
-            if (foregroundHexagones == null)
-            {
-                foregroundHexagones = generateForegroundHexagones();
-            }
+            /* if (backgroundHexagon==null)
+             {
+                 backgroundHexagon = new Hexagon(Panel.Width/2 -(Panel.Height/2), 0, Panel.Height, Panel.Height, new Pen(Color.Black,20), null);
+             }
+             backgroundHexagon.Draw(e.Graphics);
 
-            backgroundHexagon.Draw(e.Graphics);
+              if (foregroundHexagones == null)
+              {
+                  foregroundHexagones = generateForegroundHexagones();
+              }
+
+
+
+
+              for (int i = 0; i < foregroundHexagones.GetLength(0); i++)
+              {
+                  for (int j = 0; j < foregroundHexagones[i].GetLength(0); j++)
+                  {
+                      foregroundHexagones[i][j].Draw(e.Graphics);
+                  }
+              }*/
+
+            //e.Graphics.DrawRectangle(new Pen(Color.Red,10),0+5,0+5,20,20);
+
+
+            e.Graphics.DrawPolygon(new Pen(Color.Red, 50), Hexagon.test(new Pen(Color.Red,50), Panel.Width/2,Panel.Height/2, Panel.Height/2));
            
-
-            for (int i = 0; i < foregroundHexagones.GetLength(0); i++)
-            {
-                for (int j = 0; j < foregroundHexagones[i].GetLength(0); j++)
-                {
-                    foregroundHexagones[i][j].Draw(e.Graphics);
-                }
-            }
            
         }
 

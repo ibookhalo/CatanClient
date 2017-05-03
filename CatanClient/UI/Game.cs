@@ -18,7 +18,7 @@ namespace CatanClient.UI
 
         public  void Run()
         {
-            form.FormBorderStyle = FormBorderStyle.None;
+            //form.FormBorderStyle = FormBorderStyle.None;
             form.WindowState = FormWindowState.Maximized;
             gamePanel = new GamePanel();
             form.Controls.Add(gamePanel.Panel);

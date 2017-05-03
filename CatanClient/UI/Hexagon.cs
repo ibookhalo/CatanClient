@@ -14,19 +14,19 @@ namespace CatanClient.UI
         private bool isBackgroundImageProccessed;
         private Pen pen;
 
-        private int drawPenWidth;
         public Hexagon(int x, int y, int height, int width,Pen pen,Image backgroundImage) : base(x, y, height, width)
         {
             this.Edges = new List<Edge>();
             this.backgroundImage = backgroundImage;
             this.isBackgroundImageProccessed = false;
             this.pen = pen;
-
+            
             int top = (int)(height * 0.25f);
-            y += drawPenWidth / 2;
-            x += drawPenWidth / 2;
+            
+            x += (int)pen.Width / 2;
+            y += (int)(pen.Width / 2);
 
-            Point a = new Point((x + width / 2), y);
+            Point a = new Point(x+(width/2), y);
             Point b = new Point(a.X + (width / 2), a.Y + top);
             Point c = new Point(b.X, b.Y + (int)(height * 0.5f));
             Point d = new Point(a.X, c.Y + (top));
@@ -40,7 +40,21 @@ namespace CatanClient.UI
             Edges.Add(new Edge(e, f));
             Edges.Add(new Edge(f, a));
         }
-
+        public static Point[] test(Pen pen,int x,int y,int r)
+        {
+            List<Point> p = new List<Point>();
+            r -=(int) pen.Width/2;
+            r -= 2;
+            for (int i = 0; i < 6; i++)
+            {
+                double xx =x+ r * Math.Sin((Math.PI / 3) * i);
+                
+                double yy= y+r * Math.Cos((Math.PI / 3) * i);
+             
+                p.Add(new Point((int)xx,(int)yy));
+            }
+            return p.ToArray();
+        }
         public override void Draw(Graphics graphics)
         {
             if (backgroundImage!=null)
