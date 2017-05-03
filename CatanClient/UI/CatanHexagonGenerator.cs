@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace CatanClient.UI
 {
-    static class CatanHexagonGridGenerator
+    static class CatanHexagonGenerator
     {
-        public static Hexagone[][] GetCatanHexagoneGrid(int x,int y,int height, int width,Pen pen,Image backgroundImage)
+        public static Hexagon[][] GetCatanHexagoneGrid(int x,int y,int height, int width,Pen pen,Image backgroundImage)
         {
             // 7 Rows
-            Hexagone[][] hexGrid = new Hexagone[7][];
-            hexGrid[0] = new Hexagone[3]; // Row 0, Columns 3
-            hexGrid[1] = new Hexagone[4];
-            hexGrid[2] = new Hexagone[5];
-            hexGrid[3] = new Hexagone[6];
-            hexGrid[4] = new Hexagone[5];
-            hexGrid[5] = new Hexagone[4];
-            hexGrid[6] = new Hexagone[3];
+            Hexagon[][] hexGrid = new Hexagon[7][];
+            hexGrid[0] = new Hexagon[3]; // Row 0, Columns 3
+            hexGrid[1] = new Hexagon[4];
+            hexGrid[2] = new Hexagon[5];
+            hexGrid[3] = new Hexagon[6];
+            hexGrid[4] = new Hexagon[5];
+            hexGrid[5] = new Hexagon[4];
+            hexGrid[6] = new Hexagon[3];
 
             int yTemp = y;
             int xTemp = x;
@@ -31,7 +31,7 @@ namespace CatanClient.UI
                     if (columnIndex>0)
                         xTemp += width;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagone(xTemp, yTemp, height, width,pen,backgroundImage);
+                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp, yTemp, height, width,pen,backgroundImage);
                 }
                 if (rowIndex<3)
                 {
@@ -47,5 +47,6 @@ namespace CatanClient.UI
            
             return hexGrid.ToArray();
         }
+       
     }
 }

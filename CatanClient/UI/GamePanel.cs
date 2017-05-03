@@ -4,61 +4,48 @@ using System.Windows.Forms;
 
 namespace CatanClient.UI
 {
-    class GamePanel:Panel
+    class GamePanel
     {
+        public Panel Panel { private set; get; }
+        private Hexagon backgroundHexagon;
+        private Hexagon[][] foregroundHexagones;
+
         public GamePanel()
         {
-            Dock = DockStyle.Fill;
-            BackColor = System.Drawing.Color.Wheat;
-            Paint += GamePanel_Paint;
-            MouseClick += GamePanel_MouseClick;
+            Panel = new Panel();
+            Panel.Dock = DockStyle.Fill;
+            Panel.Paint += Panel_Paint;
         }
-
-        private void GamePanel_MouseClick(object sender, MouseEventArgs e)
+        private void Panel_Paint(object sender, PaintEventArgs e)
         {
+            if (backgroundHexagon==null)
+            {
+                backgroundHexagon = new Hexagon(Panel.Width / 2 - (Panel.Height / 2), 0, Panel.Height, Panel.Height, new Pen(Color.Black, 5), null);
+            }
+            if (foregroundHexagones == null)
+            {
+                foregroundHexagones = generateForegroundHexagones();
+            }
+
+            backgroundHexagon.Draw(e.Graphics);
+           
+
+            for (int i = 0; i < foregroundHexagones.GetLength(0); i++)
+            {
+                for (int j = 0; j < foregroundHexagones[i].GetLength(0); j++)
+                {
+                    foregroundHexagones[i][j].Draw(e.Graphics);
+                }
+            }
            
         }
 
-        private float HexWidth(float height)
+        private Hexagon[][] generateForegroundHexagones()
         {
-            return (float)(4 * (height / 2 / Math.Sqrt(3)));
-        }
-        private PointF[] HexToPoints(float height, float row, float col)
-        {
-            // Start with the leftmost corner of the upper left hexagon.
-            float width = HexWidth(height);
-            float y = height / 2;
-            float x = 0;
-
-            // Move down the required number of rows.
-            y += row * height;
-
-            // If the column is odd, move down half a hex more.
-            if (col % 2 == 1) y += height / 2;
-
-            // Move over for the column number.
-            x += col * (width * 0.75f);
-
-            // Generate the points.
-            return new PointF[]
-                {
-            new PointF(x, y),
-            new PointF(x + width * 0.25f, y - height / 2),
-            new PointF(x + width * 0.75f, y - height / 2),
-            new PointF(x + width, y),
-            new PointF(x + width * 0.75f, y + height / 2),
-            new PointF(x + width * 0.25f, y + height / 2),
-                };
-        }
-        private void GamePanel_Paint(object sender, PaintEventArgs e)
-        {
-            Pen blackPen = new Pen(Color.Black, 3);
-            // Draw polygon to screen.
-            e.Graphics.DrawPolygon(blackPen, HexToPoints(100,0,0));
-            e.Graphics.DrawPolygon(blackPen, HexToPoints(100, 0, 1));
-            e.Graphics.DrawPolygon(blackPen, HexToPoints(100, 0, 2));
-            e.Graphics.DrawPolygon(blackPen, HexToPoints(100, 1, 0));
-            e.Graphics.DrawPolygon(blackPen, HexToPoints(100, 1, 1));
+            int foregroundHexagonItemHeightWidth = 100;
+            var hexTest = CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X + (backgroundHexagon.Width / 2) - (3 * (foregroundHexagonItemHeightWidth / 2)), backgroundHexagon.Y, foregroundHexagonItemHeightWidth, foregroundHexagonItemHeightWidth, new Pen(Color.Black, 25), null);
+            return CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X + (backgroundHexagon.Width / 2) - (3 * 50), backgroundHexagon.Y +
+                (Math.Abs((backgroundHexagon.Points[0].Y - backgroundHexagon.Points[3].Y)) - Math.Abs(hexTest[0][1].Points[0].Y - hexTest[6][1].Points[3].Y)) / 2, foregroundHexagonItemHeightWidth, foregroundHexagonItemHeightWidth, new Pen(Color.Black, 25), null);
         }
     }
 }

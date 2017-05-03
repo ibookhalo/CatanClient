@@ -57,12 +57,11 @@
     <Compile Include="FormTest.Designer.cs">
       <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\CatanHexagonGridGenerator.cs" />
+    <Compile Include="UI\CatanHexagonGenerator.cs" />
     <Compile Include="UI\Edge.cs" />
-    <Compile Include="UI\GamePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="UI\Hexagone.cs" />
+    <Compile Include="UI\Game.cs" />
+    <Compile Include="UI\GamePanel.cs" />
+    <Compile Include="UI\Hexagon.cs" />
     <Compile Include="UI\ImageHelper.cs" />
     <Compile Include="UI\MessageBoxHelper.cs" />
     <Compile Include="UI\MainForm.cs">

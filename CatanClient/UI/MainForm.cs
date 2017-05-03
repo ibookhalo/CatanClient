@@ -85,10 +85,8 @@ namespace CatanClient.UI
             // initGame
             Invoke((MethodInvoker)delegate
             {
-                Controls.Clear();
-
-                GamePanel catanGamePanel = new GamePanel();
-                Controls.Add(catanGamePanel);
+                Game game = new UI.Game(this);
+                game.Run();
             });
         }
 

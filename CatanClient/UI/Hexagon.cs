@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace CatanClient.UI
 {
-    class Hexagone:Texture
+    class Hexagon:Texture
     {
         public List<Edge> Edges { private set; get; }
         public Point[] Points { get { return new Point[] {Edges[0].Point1, Edges[1].Point1, Edges[2].Point1, Edges[3].Point1, Edges[4].Point1, Edges[5].Point1 }; } }
@@ -15,7 +15,7 @@ namespace CatanClient.UI
         private Pen pen;
 
         private int drawPenWidth;
-        public Hexagone(int x, int y, int height, int width,Pen pen,Image backgroundImage) : base(x, y, height, width)
+        public Hexagon(int x, int y, int height, int width,Pen pen,Image backgroundImage) : base(x, y, height, width)
         {
             this.Edges = new List<Edge>();
             this.backgroundImage = backgroundImage;
@@ -48,7 +48,7 @@ namespace CatanClient.UI
                 if (!isBackgroundImageProccessed)
                 {
                     backgroundImage = ImageHelper.ResizeImage(backgroundImage, Width, Height);
-                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage,new List<Point> (new Hexagone(0, 0, Height, Width,pen, null).Points));
+                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage,new List<Point> (new Hexagon(0, 0, Height, Width,pen, null).Points));
 
                     isBackgroundImageProccessed = true;
 
