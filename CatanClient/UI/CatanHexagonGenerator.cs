@@ -9,6 +9,7 @@ namespace CatanClient.UI
 {
     static class CatanHexagonGenerator
     {
+        /*
         public static Hexagon[][] GetCatanHexagoneGrid(int x,int y,int height, int width,Pen pen,Image backgroundImage)
         {
             // 7 Rows
@@ -46,7 +47,7 @@ namespace CatanClient.UI
             }
            
             return hexGrid.ToArray();
-        }
+        }*/
        
     }
 }

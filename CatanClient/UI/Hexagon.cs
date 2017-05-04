@@ -14,47 +14,31 @@ namespace CatanClient.UI
         private bool isBackgroundImageProccessed;
         private Pen pen;
 
-        public Hexagon(int x, int y, int height, int width,Pen pen,Image backgroundImage) : base(x, y, height, width)
+        public Hexagon(int x, int y,int height,int width,Pen pen,Image backgroundImage) : base(x, y,height, width)
         {
             this.Edges = new List<Edge>();
             this.backgroundImage = backgroundImage;
             this.isBackgroundImageProccessed = false;
             this.pen = pen;
+            int radius = heightWidth / 2;
+            radius -=(int)pen.Width / 2;
             
-            int top = (int)(height * 0.25f);
-            
-            x += (int)pen.Width / 2;
-            y += (int)(pen.Width / 2);
-
-            Point a = new Point(x+(width/2), y);
-            Point b = new Point(a.X + (width / 2), a.Y + top);
-            Point c = new Point(b.X, b.Y + (int)(height * 0.5f));
-            Point d = new Point(a.X, c.Y + (top));
-            Point e = new Point(x, c.Y);
-            Point f = new Point(e.X, b.Y);
-
-            Edges.Add(new Edge(a,b));
-            Edges.Add(new Edge(b, c));
-            Edges.Add(new Edge(c, d));
-            Edges.Add(new Edge(d, e));
-            Edges.Add(new Edge(e, f));
-            Edges.Add(new Edge(f, a));
-        }
-        public static Point[] test(Pen pen,int x,int y,int r)
-        {
-            List<Point> p = new List<Point>();
-            r -=(int) pen.Width/2;
-            r -= 2;
+            List<Point> points = new List<Point>();
             for (int i = 0; i < 6; i++)
             {
-                double xx =x+ r * Math.Sin((Math.PI / 3) * i);
-                
-                double yy= y+r * Math.Cos((Math.PI / 3) * i);
-             
-                p.Add(new Point((int)xx,(int)yy));
+                double xx = x + radius * Math.Sin((Math.PI / 3) * i);
+                double yy = y + radius * Math.Cos((Math.PI / 3) * i);
+
+                points.Add(new Point((int)xx, (int)yy));
             }
-            return p.ToArray();
+            Edges.Add(new UI.Edge(points[0], points[1]));
+            Edges.Add(new UI.Edge(points[1], points[2]));
+            Edges.Add(new UI.Edge(points[2], points[3]));
+            Edges.Add(new UI.Edge(points[3], points[4]));
+            Edges.Add(new UI.Edge(points[4], points[5]));
+            Edges.Add(new UI.Edge(points[5], points[0]));
         }
+     
         public override void Draw(Graphics graphics)
         {
             if (backgroundImage!=null)
@@ -62,7 +46,7 @@ namespace CatanClient.UI
                 if (!isBackgroundImageProccessed)
                 {
                     backgroundImage = ImageHelper.ResizeImage(backgroundImage, Width, Height);
-                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage,new List<Point> (new Hexagon(0, 0, Height, Width,pen, null).Points));
+                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage,new List<Point> (new Hexagon(0, 0,Height,pen,null).Points));
 
                     isBackgroundImageProccessed = true;
 

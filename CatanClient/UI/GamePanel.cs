@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CatanClient.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -43,11 +44,12 @@ namespace CatanClient.UI
             //e.Graphics.DrawRectangle(new Pen(Color.Red,10),0+5,0+5,20,20);
 
 
-            e.Graphics.DrawPolygon(new Pen(Color.Red, 50), Hexagon.test(new Pen(Color.Red,50), Panel.Width/2,Panel.Height/2, Panel.Height/2));
+            var hex = new Hexagon(250, 250, 500, new Pen(Color.Red, 2), null);
+                hex.Draw(e.Graphics);
            
            
         }
-
+        /*
         private Hexagon[][] generateForegroundHexagones()
         {
             int foregroundHexagonItemHeightWidth = 100;
@@ -55,5 +57,6 @@ namespace CatanClient.UI
             return CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X + (backgroundHexagon.Width / 2) - (3 * 50), backgroundHexagon.Y +
                 (Math.Abs((backgroundHexagon.Points[0].Y - backgroundHexagon.Points[3].Y)) - Math.Abs(hexTest[0][1].Points[0].Y - hexTest[6][1].Points[3].Y)) / 2, foregroundHexagonItemHeightWidth, foregroundHexagonItemHeightWidth, new Pen(Color.Black, 25), null);
         }
+        */
     }
 }
