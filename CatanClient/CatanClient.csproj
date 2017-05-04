@@ -103,9 +103,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\test.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Catan.Client\Catan.Client.csproj">
       <Project>{C65CB373-9B88-4B59-8E0A-009F40F3CDFB}</Project>
       <Name>Catan.Client</Name>
@@ -113,6 +110,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\loading_apple.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ForestBackground.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

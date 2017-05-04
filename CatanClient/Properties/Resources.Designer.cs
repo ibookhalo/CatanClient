@@ -63,9 +63,9 @@ namespace CatanClient.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap loading_apple {
+        internal static System.Drawing.Bitmap ForestBackground {
             get {
-                object obj = ResourceManager.GetObject("loading_apple", resourceCulture);
+                object obj = ResourceManager.GetObject("ForestBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace CatanClient.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap test {
+        internal static System.Drawing.Bitmap loading_apple {
             get {
-                object obj = ResourceManager.GetObject("test", resourceCulture);
+                object obj = ResourceManager.GetObject("loading_apple", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

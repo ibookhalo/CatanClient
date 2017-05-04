@@ -11,7 +11,7 @@ namespace CatanClient.UI
 {
     static class ImageHelper
     {
-        public static Image GetImageWithArea(Image sourceBitmap,List<Point> points)
+        public static Image GetImageWithArea(Image sourceBitmap,List<PointF> points)
         {
             Bitmap newBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
 

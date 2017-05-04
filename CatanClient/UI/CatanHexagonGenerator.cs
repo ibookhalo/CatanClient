@@ -9,8 +9,7 @@ namespace CatanClient.UI
 {
     static class CatanHexagonGenerator
     {
-        /*
-        public static Hexagon[][] GetCatanHexagoneGrid(int x,int y,int height, int width,Pen pen,Image backgroundImage)
+        public static Hexagon[][] GetCatanHexagoneGrid(int x,int y,int radius,Pen pen,Image backgroundImage)
         {
             // 7 Rows
             Hexagon[][] hexGrid = new Hexagon[7][];
@@ -21,7 +20,7 @@ namespace CatanClient.UI
             hexGrid[4] = new Hexagon[5];
             hexGrid[5] = new Hexagon[4];
             hexGrid[6] = new Hexagon[3];
-
+/*
             int yTemp = y;
             int xTemp = x;
 
@@ -44,10 +43,9 @@ namespace CatanClient.UI
                     xTemp = hexGrid[rowIndex][0].Points[4].X + (width / 2);
                     yTemp = hexGrid[rowIndex][0].Points[4].Y;
                 }
-            }
+            }*/
            
             return hexGrid.ToArray();
-        }*/
-       
+        }
     }
 }

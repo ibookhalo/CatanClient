@@ -9,9 +9,10 @@ namespace CatanClient.UI
 {
     class Edge
     {
-        public Point Point1 { private set; get; }
-        public Point Point2 { private set; get; }
-        public Edge(Point point1, Point point2)
+        public PointF Point1 { private set; get; }
+        public PointF Point2 { private set; get; }
+        public float Length { get { return (float)Math.Sqrt(Math.Pow(Point2.X- Point1.X,2)  + Math.Pow(Point2.Y - Point1.Y, 2)); } }
+        public Edge(PointF point1, PointF point2)
         {
             this.Point1 = point1;
             this.Point2 = point2;
