@@ -19,7 +19,7 @@ namespace CatanClient.UI
             hexGrid[3] = new Hexagon[4];
             hexGrid[4] = new Hexagon[3];
 
-            /*
+            
             float xTemp = 0;
             float yTemp = 0;
 
@@ -28,21 +28,22 @@ namespace CatanClient.UI
                 for (int columnIndex = 0; columnIndex < hexGrid[rowIndex].GetLength(0); columnIndex++)
                 {
                     if (columnIndex>0)
-                        xTemp += radius;
+                        xTemp += 2*radius;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp, radius, pen,backgroundImage);
+                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp, radius, pen,backgroundImage,true);
                 }
+                break;
                 if (rowIndex<3)
                 {
-                    xTemp = hexGrid[rowIndex][0].Points[4].X - (width / 2);
+                    xTemp = hexGrid[rowIndex][0].Points[4].X - hexGrid[rowIndex][0].Width/2;
                     yTemp = hexGrid[rowIndex][0].Points[4].Y;
                 }
                 else
                 {
-                    xTemp = hexGrid[rowIndex][0].Points[4].X + (width / 2);
+                    xTemp = hexGrid[rowIndex][0].Points[4].X + (radius / 2);
                     yTemp = hexGrid[rowIndex][0].Points[4].Y;
                 }
-            }*/
+            }
            
             return hexGrid.ToArray();
         }

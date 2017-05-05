@@ -10,6 +10,12 @@ namespace CatanClient.UI
         public Panel Panel { private set; get; }
         private Hexagon backgroundHexagon;
         private Hexagon[][] foregroundHexagones;
+        public void DrawCircle(Graphics g, Pen pen,
+                                 float centerX, float centerY, float radius)
+        {
+            g.DrawEllipse(pen, centerX - radius, centerY - radius,
+                          radius + radius, radius + radius);
+        }
 
         public GamePanel()
         {
@@ -37,20 +43,22 @@ namespace CatanClient.UI
              backgroundHexagon.Draw(e.Graphics);
 
             
-            var testHex = new Hexagon(backgroundHexagon.X, backgroundHexagon.Y, backgroundHexagon.Radius*0.7f, pen, null, false);
+            var testHex = new Hexagon(backgroundHexagon.X, backgroundHexagon.Y, backgroundHexagon.Radius*0.62f, pen, null, false);
             testHex.Draw(e.Graphics);
-          
-            /*
-            float penWidth = 5;
-            float rForegroundHex = (backgroundHexagon.Width / 6) / 2;
-            rForegroundHex -= penWidth * 6;
 
-
+              float radius = (2 * testHex.Radius / 5) / 2;
             
-           
+            Hexagon hextest2 = new UI.Hexagon(testHex.Points[4].X, testHex.Points[4].Y, radius, pen, null, true);
+             hextest2 = new UI.Hexagon(testHex.Points[4].X+ hextest2.Width/2, testHex.Points[4].Y, radius, pen, null, true);
+            hextest2.Draw(e.Graphics);
+
+            DrawCircle(e.Graphics, pen, testHex.X, testHex.Y, testHex.Radius);
+
+
+            /*
               if (foregroundHexagones == null)
               {
-                  foregroundHexagones = generateForegroundHexagones();
+                foregroundHexagones = CatanHexagonGenerator.GetCatanHexagoneGrid(testHex.Points[4].X, testHex.Points[4].Y, radius, pen, null);
               }
 
 
@@ -64,14 +72,5 @@ namespace CatanClient.UI
                   }
               }*/
         }
-        /*
-        private Hexagon[][] generateForegroundHexagones()
-        {
-            int foregroundHexagonItemHeightWidth = 100;
-            var hexTest = CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X + (backgroundHexagon.Width / 2) - (3 * (foregroundHexagonItemHeightWidth / 2)), backgroundHexagon.Y, foregroundHexagonItemHeightWidth, foregroundHexagonItemHeightWidth, new Pen(Color.Black, 25), null);
-            return CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X + (backgroundHexagon.Width / 2) - (3 * 50), backgroundHexagon.Y +
-                (Math.Abs((backgroundHexagon.Points[0].Y - backgroundHexagon.Points[3].Y)) - Math.Abs(hexTest[0][1].Points[0].Y - hexTest[6][1].Points[3].Y)) / 2, foregroundHexagonItemHeightWidth, foregroundHexagonItemHeightWidth, new Pen(Color.Black, 25), null);
-        }
-        */
     }
 }
