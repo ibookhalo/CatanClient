@@ -16,10 +16,12 @@ namespace CatanClient.UI
             Panel = new Panel();
             Panel.Dock = DockStyle.Fill;
             Panel.BackColor = Color.White;
+            
 
             Panel.Paint += Panel_Paint;
             Panel.MouseClick += Panel_MouseClick;
-           
+            Panel.BackgroundImage = Resources.Background;
+            Panel.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
         private void Panel_MouseClick(object sender, MouseEventArgs e)
@@ -35,9 +37,14 @@ namespace CatanClient.UI
                  backgroundHexagon = new Hexagon(Panel.Width/2, Panel.Height/2, Panel.Height/2, new Pen(Color.FromArgb(104,116,68),0.5f), Resources.ForestBackground);
              }
              backgroundHexagon.Draw(e.Graphics);
-
-
             /*
+            float penWidth = 5;
+            float rForegroundHex = (backgroundHexagon.Width / 6) / 2;
+            rForegroundHex -= penWidth * 6;
+
+
+            
+           
               if (foregroundHexagones == null)
               {
                   foregroundHexagones = generateForegroundHexagones();

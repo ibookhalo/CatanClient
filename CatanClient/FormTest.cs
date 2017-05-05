@@ -20,7 +20,7 @@ namespace CatanClient
 
         public FormTest()
         {
-            InitializeComponent();
+           
             game = new Game(this);
             game.Run();
             

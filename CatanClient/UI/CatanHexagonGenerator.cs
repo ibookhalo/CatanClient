@@ -9,29 +9,28 @@ namespace CatanClient.UI
 {
     static class CatanHexagonGenerator
     {
-        public static Hexagon[][] GetCatanHexagoneGrid(int x,int y,int radius,Pen pen,Image backgroundImage)
+        public static Hexagon[][] GetCatanHexagoneGrid(float x,float y,float radius,Pen pen,Image backgroundImage)
         {
             // 7 Rows
-            Hexagon[][] hexGrid = new Hexagon[7][];
+            Hexagon[][] hexGrid = new Hexagon[5][];
             hexGrid[0] = new Hexagon[3]; // Row 0, Columns 3
             hexGrid[1] = new Hexagon[4];
             hexGrid[2] = new Hexagon[5];
-            hexGrid[3] = new Hexagon[6];
-            hexGrid[4] = new Hexagon[5];
-            hexGrid[5] = new Hexagon[4];
-            hexGrid[6] = new Hexagon[3];
-/*
-            int yTemp = y;
-            int xTemp = x;
+            hexGrid[3] = new Hexagon[4];
+            hexGrid[4] = new Hexagon[3];
+
+            /*
+            float xTemp = 0;
+            float yTemp = 0;
 
             for (int rowIndex = 0; rowIndex < hexGrid.GetLength(0); rowIndex++)
             {
                 for (int columnIndex = 0; columnIndex < hexGrid[rowIndex].GetLength(0); columnIndex++)
                 {
                     if (columnIndex>0)
-                        xTemp += width;
+                        xTemp += radius;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp, yTemp, height, width,pen,backgroundImage);
+                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp, radius, pen,backgroundImage);
                 }
                 if (rowIndex<3)
                 {

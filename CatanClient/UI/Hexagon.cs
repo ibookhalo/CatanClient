@@ -45,16 +45,13 @@ namespace CatanClient.UI
      
         public override void Draw(Graphics graphics)
         {
-            if (backgroundImage!=null)
+            if (backgroundImage!=null && !isBackgroundImageProccessed)
             {
-                if (!isBackgroundImageProccessed)
-                {
-                    backgroundImage = ImageHelper.ResizeImage(backgroundImage,(int) Width, (int)Height);
+                backgroundImage = ImageHelper.ResizeImage(backgroundImage, (int)Width, (int)Height);
 
-                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage,new List<PointF>(new Hexagon(backgroundImage.Width/2, backgroundImage.Height/2, radius - pen.Width / 2, pen, null).Points));
-                    isBackgroundImageProccessed = true;
-                    graphics.DrawImage(backgroundImage, X-backgroundImage.Width/2, Y-backgroundImage.Height/2);
-                }
+                backgroundImage = ImageHelper.GetImageWithArea(backgroundImage, new List<PointF>(new Hexagon(backgroundImage.Width / 2, backgroundImage.Height / 2, radius - pen.Width / 2, pen, null).Points));
+                isBackgroundImageProccessed = true;
+                graphics.DrawImage(backgroundImage, X - backgroundImage.Width / 2, Y - backgroundImage.Height / 2);
             }
             graphics.DrawPolygon(pen, new Hexagon(X, Y, radius - pen.Width / 2, pen, null).Points);
         }
