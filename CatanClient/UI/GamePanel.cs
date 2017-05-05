@@ -17,11 +17,8 @@ namespace CatanClient.UI
             Panel.Dock = DockStyle.Fill;
             Panel.BackColor = Color.White;
             
-
             Panel.Paint += Panel_Paint;
             Panel.MouseClick += Panel_MouseClick;
-            Panel.BackgroundImage = Resources.Background;
-            Panel.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
         private void Panel_MouseClick(object sender, MouseEventArgs e)
@@ -32,11 +29,17 @@ namespace CatanClient.UI
         private void Panel_Paint(object sender, PaintEventArgs e)
         {
              e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            var pen = new Pen(Color.FromArgb(104, 116, 68), 0.5f);
              if (backgroundHexagon==null)
              {
-                 backgroundHexagon = new Hexagon(Panel.Width/2, Panel.Height/2, Panel.Height/2, new Pen(Color.FromArgb(104,116,68),0.5f), Resources.ForestBackground);
+                 backgroundHexagon = new Hexagon(Panel.Width/2, Panel.Height/2, Panel.Height/2, pen, null,true);
              }
              backgroundHexagon.Draw(e.Graphics);
+
+            
+            var testHex = new Hexagon(backgroundHexagon.X, backgroundHexagon.Y, backgroundHexagon.Radius*0.7f, pen, null, false);
+            testHex.Draw(e.Graphics);
+          
             /*
             float penWidth = 5;
             float rForegroundHex = (backgroundHexagon.Width / 6) / 2;

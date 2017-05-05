@@ -14,23 +14,34 @@ namespace CatanClient.UI
         private Image backgroundImage;
         private bool isBackgroundImageProccessed;
         private Pen pen;
-        private float radius;
+        private bool isPickTop;
+        public float Radius { private set; get; }
 
-        public Hexagon(float x, float y,float radius,Pen pen,Image backgroundImage) : base(x, y,2*radius, 0)
+        public Hexagon(float x, float y,float radius,Pen pen,Image backgroundImage, bool isPickTop) : base(x, y,2*radius, 0)
         {
             this.Edges = new List<Edge>();
             this.backgroundImage = backgroundImage;
             this.isBackgroundImageProccessed = false;
             this.pen = pen;
-            this.radius = radius;
+            this.Radius = radius;
+            this.isPickTop = isPickTop;
            
             List<PointF> points = new List<PointF>();
            
             for (int pointIndex = 0; pointIndex < 6; pointIndex++)
             {
-                points.Add(new PointF(
-                    (float)( x + radius * Math.Sin((pointIndex * Math.PI) / 3)),
-                    (float)( y + radius * Math.Cos((pointIndex * Math.PI) / 3))));
+                if (isPickTop)
+                {
+                    points.Add(new PointF(
+                    (float)(x + radius * Math.Sin((pointIndex * Math.PI) / 3)),
+                    (float)(y + radius * Math.Cos((pointIndex * Math.PI) / 3))));
+                }
+                else
+                {
+                    points.Add(new PointF(
+                    (float)(x + radius * Math.Cos((pointIndex * Math.PI) / 3)),
+                    (float)(y + radius * Math.Sin((pointIndex * Math.PI) / 3))));
+                }
             }
           
             this.Width = new Edge(points[2], points[4]).Length;
@@ -49,11 +60,11 @@ namespace CatanClient.UI
             {
                 backgroundImage = ImageHelper.ResizeImage(backgroundImage, (int)Width, (int)Height);
 
-                backgroundImage = ImageHelper.GetImageWithArea(backgroundImage, new List<PointF>(new Hexagon(backgroundImage.Width / 2, backgroundImage.Height / 2, radius - pen.Width / 2, pen, null).Points));
+                backgroundImage = ImageHelper.GetImageWithArea(backgroundImage, new List<PointF>(new Hexagon(backgroundImage.Width / 2, backgroundImage.Height / 2, Radius - pen.Width / 2, pen, null, isPickTop).Points));
                 isBackgroundImageProccessed = true;
                 graphics.DrawImage(backgroundImage, X - backgroundImage.Width / 2, Y - backgroundImage.Height / 2);
             }
-            graphics.DrawPolygon(pen, new Hexagon(X, Y, radius - pen.Width / 2, pen, null).Points);
+            graphics.DrawPolygon(pen, new Hexagon(X, Y, Radius - pen.Width / 2, pen, null, isPickTop).Points);
         }
     }
 }
