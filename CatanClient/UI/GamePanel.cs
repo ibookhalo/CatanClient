@@ -43,22 +43,22 @@ namespace CatanClient.UI
              backgroundHexagon.Draw(e.Graphics);
 
             
-            var testHex = new Hexagon(backgroundHexagon.X, backgroundHexagon.Y, backgroundHexagon.Radius*0.62f, pen, null, false);
+            /*var testHex = new Hexagon(backgroundHexagon.X, backgroundHexagon.Y, backgroundHexagon.Radius*0.62f, pen, null, false);
             testHex.Draw(e.Graphics);
 
-              float radius = (2 * testHex.Radius / 5) / 2;
+            float radius = (2 * testHex.Height / 5) / 2;
             
             Hexagon hextest2 = new UI.Hexagon(testHex.Points[4].X, testHex.Points[4].Y, radius, pen, null, true);
              hextest2 = new UI.Hexagon(testHex.Points[4].X+ hextest2.Width/2, testHex.Points[4].Y, radius, pen, null, true);
             hextest2.Draw(e.Graphics);
 
             DrawCircle(e.Graphics, pen, testHex.X, testHex.Y, testHex.Radius);
+            */
 
-
-            /*
+            
               if (foregroundHexagones == null)
               {
-                foregroundHexagones = CatanHexagonGenerator.GetCatanHexagoneGrid(testHex.Points[4].X, testHex.Points[4].Y, radius, pen, null);
+                foregroundHexagones = CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X, backgroundHexagon.Y, 100, pen, null);
               }
 
 
@@ -70,7 +70,7 @@ namespace CatanClient.UI
                   {
                       foregroundHexagones[i][j].Draw(e.Graphics);
                   }
-              }*/
+              }
         }
     }
 }

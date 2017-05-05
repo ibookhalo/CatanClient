@@ -17,7 +17,7 @@ namespace CatanClient.UI
         private bool isPickTop;
         public float Radius { private set; get; }
 
-        public Hexagon(float x, float y,float radius,Pen pen,Image backgroundImage, bool isPickTop) : base(x, y,2*radius, 0)
+        public Hexagon(float x, float y,float radius,Pen pen,Image backgroundImage, bool isPickTop) : base(x, y,0, 0)
         {
             this.Edges = new List<Edge>();
             this.backgroundImage = backgroundImage;
@@ -43,8 +43,17 @@ namespace CatanClient.UI
                     (float)(y + radius * Math.Sin((pointIndex * Math.PI) / 3))));
                 }
             }
-          
-            this.Width = new Edge(points[2], points[4]).Length;
+
+            if (isPickTop)
+            {
+                this.Width = new Edge(points[2], points[4]).Length;
+                this.Height = 2 * radius;
+            }
+            else
+            {
+                this.Width = 2 * radius;
+                this.Height= this.Width = new Edge(points[2], points[4]).Length;
+            }
 
             Edges.Add(new UI.Edge(points[0], points[1]));
             Edges.Add(new UI.Edge(points[1], points[2]));
