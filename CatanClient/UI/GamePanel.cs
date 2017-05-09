@@ -1,15 +1,22 @@
 ﻿using CatanClient.Properties;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Media;
 using System.Windows.Forms;
 
 namespace CatanClient.UI
 {
     class GamePanel
     {
-        public Panel Panel { private set; get; }
+        public TestPanel Panel { private set; get; }
         private Hexagon backgroundHexagon;
         private Hexagon[][] foregroundHexagones;
+        private List<CatanCity> cities;
+        bool lastWasIn = false;
+        bool drawOK = false;
         public void DrawCircle(Graphics g, Pen pen,
                                  float centerX, float centerY, float radius)
         {
@@ -19,58 +26,91 @@ namespace CatanClient.UI
 
         public GamePanel()
         {
-            Panel = new Panel();
+            Panel = new TestPanel();
             Panel.Dock = DockStyle.Fill;
             Panel.BackColor = Color.White;
-            
+                
             Panel.Paint += Panel_Paint;
             Panel.MouseClick += Panel_MouseClick;
+
         }
+        
 
         private void Panel_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine($"x: {e.X},    y:  {e.Y}");
+           
+            CatanCity remove = null;
+            Region reg = null;
+            foreach (var item in cities)
+            {
+                if ((reg = item.Region).IsVisible(e.X, e.Y))
+                {
+                    remove = item;
+                    break;
+                }
+            }
+
+          
+
+            if (remove != null)
+            {
+                remove.Color = Color.Blue;
+                Panel.Invalidate(reg);
+            }
         }
 
         private void Panel_Paint(object sender, PaintEventArgs e)
         {
-             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            var pen = new Pen(Color.FromArgb(104, 116, 68), 0.5f);
-             if (backgroundHexagon==null)
-             {
-                 backgroundHexagon = new Hexagon(Panel.Width/2, Panel.Height/2, Panel.Height/2, pen, null,true);
-             }
-             backgroundHexagon.Draw(e.Graphics);
 
-            
-            /*var testHex = new Hexagon(backgroundHexagon.X, backgroundHexagon.Y, backgroundHexagon.Radius*0.62f, pen, null, false);
-            testHex.Draw(e.Graphics);
+            var penBackgroundHex = new Pen(Color.Black, 10);
 
-            float radius = (2 * testHex.Height / 5) / 2;
-            
-            Hexagon hextest2 = new UI.Hexagon(testHex.Points[4].X, testHex.Points[4].Y, radius, pen, null, true);
-             hextest2 = new UI.Hexagon(testHex.Points[4].X+ hextest2.Width/2, testHex.Points[4].Y, radius, pen, null, true);
-            hextest2.Draw(e.Graphics);
-
-            DrawCircle(e.Graphics, pen, testHex.X, testHex.Y, testHex.Radius);
-            */
-
-            
-              if (foregroundHexagones == null)
-              {
-                foregroundHexagones = CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X, backgroundHexagon.Y, 100, pen, null);
-              }
+            if (backgroundHexagon == null)
+            {
+                backgroundHexagon = new Hexagon(Panel.Width / 2, Panel.Height / 2, Panel.Height / 2, penBackgroundHex, null, true);
+            }
+            backgroundHexagon.Draw(e.Graphics);
+            drawOK = true;
 
 
+            var penForegroundHex = new Pen(Color.Black, 5f);
+            penForegroundHex.Alignment = PenAlignment.Inset;
+
+            if (foregroundHexagones == null)
+            {
+                foregroundHexagones = CatanHexagonGenerator.GetCatanHexagoneGrid(backgroundHexagon.X, backgroundHexagon.Y, (backgroundHexagon.Radius /6), penForegroundHex);
+            }
+        
+
+            for (int i = 0; i < foregroundHexagones.GetLength(0); i++)
+            {
+                for (int j = 0; j < foregroundHexagones[i].GetLength(0); j++)
+                {
+
+                    foregroundHexagones[i][j].Draw(e.Graphics);
+                }
+            }
 
 
-              for (int i = 0; i < foregroundHexagones.GetLength(0); i++)
-              {
-                  for (int j = 0; j < foregroundHexagones[i].GetLength(0); j++)
-                  {
-                      foregroundHexagones[i][j].Draw(e.Graphics);
-                  }
-              }
+
+            // ###############################
+            var im = ImageHelper.ResizeImageAndTransparent(ImageHelper.ReplaceColor(Resources.HouseGray, Color.FromArgb(195, 195, 195), Color.Red), Color.White, 40, 40) as Bitmap;
+
+            if (cities == null)
+            {
+                cities = new List<CatanCity>();
+                for (int i = 0; i < foregroundHexagones.GetLength(0); i++)
+                {
+                    for (int j = 0; j < foregroundHexagones[i].GetLength(0); j++)
+                    {
+                        float x = foregroundHexagones[i][j].Points[3].X;
+                        float y = foregroundHexagones[i][j].Points[3].Y;
+
+                        CatanCity cc = new UI.CatanCity(x, y, im,Color.Red);
+                        cities.Add(cc);
+                    }
+                }
+            }
+            cities.ForEach(c => c.Draw(e.Graphics));
         }
     }
 }

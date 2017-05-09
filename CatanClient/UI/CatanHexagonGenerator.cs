@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CatanClient.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CatanClient.UI
 {
     static class CatanHexagonGenerator
     {
-        public static Hexagon[][] GetCatanHexagoneGrid(float x,float y,float radius,Pen pen,Image backgroundImage)
+        public static Hexagon[][] GetCatanHexagoneGrid(float x,float y,float radius,Pen pen)
         {
             // 7 Rows
             Hexagon[][] hexGrid = new Hexagon[5][];
@@ -21,8 +22,8 @@ namespace CatanClient.UI
 
             var hexProto = new Hexagon(x, y, radius, pen, null, true);
 
-            x -= hexProto.Width;
-            y -= hexProto.Height + (new Edge(hexProto.Points[2],hexProto.Points[1]).Length);
+            x -= hexProto.Width-pen.Width;
+            y -= hexProto.Height + (Edge.CalculateLength(hexProto.Points[2], hexProto.Points[1]))-pen.Width*2;
 
             float hexWidth = hexProto.Width;
             
@@ -34,19 +35,20 @@ namespace CatanClient.UI
                 for (int columnIndex = 0; columnIndex < hexGrid[rowIndex].GetLength(0); columnIndex++)
                 {
                     if (columnIndex > 0)
-                        xTemp += hexWidth;
+                        xTemp += hexWidth-pen.Width;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp, radius, pen,backgroundImage,true);
+                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp, radius, pen, Resources.Ackerland, true);
                 }
+            
                 if (rowIndex<2)
                 {
-                    xTemp = hexGrid[rowIndex][0].Points[5].X;
-                    yTemp = hexGrid[rowIndex][0].Points[5].Y + radius;
+                    xTemp = hexGrid[rowIndex][0].Points[5].X+pen.Width/2;
+                    yTemp = hexGrid[rowIndex][0].Points[5].Y + radius-pen.Width;
                 }
                 else
                 {
-                    xTemp = hexGrid[rowIndex][0].Points[1].X ;
-                    yTemp = hexGrid[rowIndex][0].Points[1].Y+radius;
+                    xTemp = hexGrid[rowIndex][0].Points[1].X - pen.Width / 2;
+                    yTemp = hexGrid[rowIndex][0].Points[1].Y + radius - pen.Width;
                 }
             }
            

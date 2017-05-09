@@ -63,9 +63,9 @@ namespace CatanClient.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Background {
+        internal static System.Drawing.Bitmap Ackerland {
             get {
-                object obj = ResourceManager.GetObject("Background", resourceCulture);
+                object obj = ResourceManager.GetObject("Ackerland", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace CatanClient.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ForestBackground {
+        internal static System.Drawing.Bitmap HouseGray {
             get {
-                object obj = ResourceManager.GetObject("ForestBackground", resourceCulture);
+                object obj = ResourceManager.GetObject("HouseGray", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

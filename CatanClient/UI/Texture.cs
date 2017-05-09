@@ -14,6 +14,7 @@ namespace CatanClient.UI
         public float Height { protected set; get; }
         public float Width { protected set; get; }
 
+        public abstract Region Region { get;}
 
         public Texture(float x, float y,float height, float width)
         {
@@ -21,7 +22,9 @@ namespace CatanClient.UI
             this.Y = y;
             this.Height = height;
             this.Width = width;
+
         }
         public abstract void Draw(Graphics graphics);
+
     }
 }
