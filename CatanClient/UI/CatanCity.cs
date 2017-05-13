@@ -23,7 +23,7 @@ namespace CatanClient.UI
                 var point2 = new PointF(point1.X + Width, point1.Y);
                 var point3 = new PointF(point2.X, point2.Y + Height);
                 var point4 = new PointF(point1.X, point3.Y);
-
+                
                 path.AddPolygon(new PointF[] {point1, point2,point3 ,point4});
                 return new Region(path);
             }
