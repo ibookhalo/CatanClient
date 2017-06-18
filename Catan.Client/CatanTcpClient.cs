@@ -27,7 +27,7 @@ namespace Catan.Client
         public CatanTcpClient(IPAddress serverIpAddress)
         {
             this.TcpClient = new TcpClient();
-            this.serverIpAddress = serverIpAddress;
+            this.serverIpAddress = serverIpAddress;GameStateMessage a;
         }
 
         public void ConnectToCatanServerAsync(CatanClientAuthenticationMessage catanAuthMessage)

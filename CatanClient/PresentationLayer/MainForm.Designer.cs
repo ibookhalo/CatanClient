@@ -1,4 +1,4 @@
-﻿namespace CatanClient.UI
+﻿namespace Catan.Client.PresentationLayer
 {
     partial class MainForm
     {
@@ -37,6 +37,7 @@
             this.tbNickname = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
+            this.lblWaitingForClients = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,8 +142,8 @@
             // pbLoading
             // 
             this.pbLoading.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pbLoading.Image = global::CatanClient.Properties.Resources.loading_apple;
-            this.pbLoading.Location = new System.Drawing.Point(327, 463);
+            this.pbLoading.Image = global::Catan.Client.Properties.Resources.loading_apple;
+            this.pbLoading.Location = new System.Drawing.Point(329, 463);
             this.pbLoading.Name = "pbLoading";
             this.pbLoading.Size = new System.Drawing.Size(156, 120);
             this.pbLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -150,12 +151,25 @@
             this.pbLoading.TabStop = false;
             this.pbLoading.Visible = false;
             // 
+            // lblWaitingForClients
+            // 
+            this.lblWaitingForClients.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblWaitingForClients.AutoSize = true;
+            this.lblWaitingForClients.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWaitingForClients.Location = new System.Drawing.Point(168, 586);
+            this.lblWaitingForClients.Name = "lblWaitingForClients";
+            this.lblWaitingForClients.Size = new System.Drawing.Size(487, 55);
+            this.lblWaitingForClients.TabIndex = 8;
+            this.lblWaitingForClients.Text = "Auf Clients warten ...";
+            this.lblWaitingForClients.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SandyBrown;
-            this.ClientSize = new System.Drawing.Size(806, 595);
+            this.ClientSize = new System.Drawing.Size(806, 648);
+            this.Controls.Add(this.lblWaitingForClients);
             this.Controls.Add(this.pbLoading);
             this.Controls.Add(this.tbNickname);
             this.Controls.Add(this.label4);
@@ -170,7 +184,6 @@
             this.Name = "MainForm";
             this.Text = "Form1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -188,6 +201,7 @@
         private System.Windows.Forms.TextBox tbNickname;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pbLoading;
+        private System.Windows.Forms.Label lblWaitingForClients;
     }
 }
 

@@ -124,7 +124,25 @@
   <data name="loading_apple" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\loading_apple.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Ackerland" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="BackgroundHexagonAckerland" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Ackerland.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundHexagonBerkwerkGold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundHexagonBerkwerk.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundHexagonEisenmine" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundHexagonEisenmine.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundHexagonWald" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundHexagonWald.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundHexagonMeeresfeld" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundHexagonWasser.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundHexagonWeideland" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundHexagonWeideland.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BackgroundHexagonWohnstaette" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackgroundHexagonWohnstaette.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

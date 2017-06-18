@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CatanClient.Properties {
+namespace Catan.Client.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace CatanClient.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CatanClient.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Catan.Client.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,69 @@ namespace CatanClient.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Ackerland {
+        internal static System.Drawing.Bitmap BackgroundHexagonAckerland {
             get {
-                object obj = ResourceManager.GetObject("Ackerland", resourceCulture);
+                object obj = ResourceManager.GetObject("BackgroundHexagonAckerland", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackgroundHexagonBerkwerkGold {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundHexagonBerkwerkGold", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackgroundHexagonEisenmine {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundHexagonEisenmine", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackgroundHexagonMeeresfeld {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundHexagonMeeresfeld", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackgroundHexagonWald {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundHexagonWald", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackgroundHexagonWeideland {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundHexagonWeideland", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BackgroundHexagonWohnstaette {
+            get {
+                object obj = ResourceManager.GetObject("BackgroundHexagonWohnstaette", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

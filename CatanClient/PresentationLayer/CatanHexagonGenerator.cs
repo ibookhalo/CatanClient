@@ -1,4 +1,4 @@
-﻿using CatanClient.Properties;
+﻿using Catan.Client.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatanClient.UI
+namespace Catan.Client.PresentationLayer
 {
     static class CatanHexagonGenerator
     {
@@ -20,7 +20,7 @@ namespace CatanClient.UI
             hexGrid[3] = new Hexagon[4];
             hexGrid[4] = new Hexagon[3];
 
-            var hexProto = new Hexagon(x, y, radius, pen, null, true);
+            var hexProto = new Hexagon(x, y,0,0, radius, pen, true);
 
             x -= hexProto.Width-pen.Width;
             y -= hexProto.Height + (Edge.CalculateLength(hexProto.Points[2], hexProto.Points[1]))-pen.Width*2;
@@ -37,7 +37,7 @@ namespace CatanClient.UI
                     if (columnIndex > 0)
                         xTemp += hexWidth-pen.Width;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp, radius, pen, Resources.Ackerland, true);
+                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp,rowIndex, columnIndex, radius, pen, true);
                 }
             
                 if (rowIndex<2)
