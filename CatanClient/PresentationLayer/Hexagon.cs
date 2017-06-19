@@ -94,7 +94,7 @@ namespace Catan.Client.PresentationLayer
                 if (!isBackgroundImageProccessed)
                 {
                     backgroundImage = ImageHelper.ResizeImage(backgroundImage, (int)Width, (int)Height);
-                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage, new List<PointF>(new Hexagon(backgroundImage.Width / 2, backgroundImage.Height / 2, 0, 0, Radius - pen.Width / 2, pen, isPickTop).Points));
+                    backgroundImage = ImageHelper.GetImageWithArea(backgroundImage, new List<PointF>(new Hexagon(backgroundImage.Width / 2, backgroundImage.Height / 2, 0, 0, Radius - Pen.Width / 2, Pen, isPickTop).Points));
                     isBackgroundImageProccessed = true;
                 }
 

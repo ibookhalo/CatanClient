@@ -21,9 +21,9 @@ namespace Catan.Client.PresentationLayer
 
         private Pen penBackgroundHex, penForegroundHex;
 
-        public GamePanel(Game.Hexagon[][] hexagoneFields)
+        public GamePanel(Game.Hexagon[][] hexagonFields)
         {
-            this.hexagoneFields = hexagoneFields;
+            this.hexagoneFields = hexagonFields;
 
             Panel = new PresentationLayer.CustomPanel();
 
@@ -82,25 +82,6 @@ namespace Catan.Client.PresentationLayer
                     return Resources.BackgroundHexagonWohnstaette;
                 default:
                     throw new NotImplementedException();
-            }
-        }
-
-        public void DrawPlayersInfo(List<CatanClient> clients, CatanClient currentClient)
-        {
-            // me
-            var me = new PlayerInformationControl(currentClient);
-            me.Location = new Point(0, 0);
-            me.Dock = DockStyle.Left|DockStyle.Top;
-
-            this.Panel.Controls.Add(me);
-
-
-
-            // other players
-            foreach (var player in clients.Where(client=>client!=currentClient).ToList())
-            {
-                var playerInfo = new PlayerInformationControl(player);
-                this.Panel.Controls.Add(playerInfo);
             }
         }
     }

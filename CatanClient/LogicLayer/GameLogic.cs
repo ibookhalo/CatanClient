@@ -43,24 +43,28 @@ namespace Catan.Client.LogicLayer
         {
             if (networkMessage is Network.Messaging.GameStateMessage)
             {
-                var gameState = networkMessage as GameStateMessage;
+                var gameStateMessage = networkMessage as GameStateMessage;
                 CatanClient me = null;
-                if ((me=gameState.Clients.Find(client => client.IPAddressPortNr.Equals(iNetworkLayer.GetLocalEndPoint().ToString())))!=null)
+                // überprüfen ob das Message für mich ist
+                if ((me=gameStateMessage.Clients.Find(client => client.IPAddressPortNr.Equals(iNetworkLayer.GetLocalEndPoint().ToString())))!=null)
                 {
                     if (clientID==0)
                     {
                         clientID = me.ID;
+                        iPresentationLayer.InitGamePanel(gameStateMessage.HexagoneFields,gameStateMessage.Clients);
                     }
-                    iPresentationLayer.UpdateGame(gameState);
+                    iPresentationLayer.UpdateGame(gameStateMessage);
                 }
+                /*
                 else
                 {
                     iNetworkLayer.Disconnect();
-                }
+                }*/
             }
             else
             {
-
+                // falsches Format?
+                throw new NotImplementedException("Unknown Message Object");
             }
         }
 

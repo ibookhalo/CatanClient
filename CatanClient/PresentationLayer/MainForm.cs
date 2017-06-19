@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Catan.Game;
 
 namespace Catan.Client.PresentationLayer
 {
@@ -21,6 +22,8 @@ namespace Catan.Client.PresentationLayer
 
         private Interfaces.ILogicLayer_PresentationLayer iLogicLayer_PresentationLayer;
         private GamePanel gamePanel;
+        private CatanClient currentClient;
+        private List<CatanClient> catanClients;
 
         public MainForm(Interfaces.ILogicLayer_PresentationLayer iLogicLayer_PresentationLayer)
         {
@@ -90,43 +93,111 @@ namespace Catan.Client.PresentationLayer
         {
             this.Invoke(methodInvoker);
         }
-        public void UpdateGame(GameStateMessage gameState)
+        public void UpdateGame(GameStateMessage gameStateMessage)
         {
             executeUICodeThreadSafe(delegate
             {
-                if (this.gamePanel == null)
-                {
-                    this.Controls.Clear();
-                    this.Controls.Add((this.gamePanel = new PresentationLayer.GamePanel(gameState.HexagoneFields)).Panel);
-                    int widthFactor = (int)(Width * 0.2f);
-                    gamePanel.Panel.Location = new Point(widthFactor, 0);
-                    gamePanel.Panel.Size = new Size(Width - (2 * widthFactor), Height);
-                    var a = new Button() { Text = "Do Work" };
-                    a.Click += A_Click;
-                    this.Controls.Add(a);
-                }
-                //gamePanel.DrawPlayersInfo(gameState.Clients, gameState.CurrentClient);
+                this.currentClient = gameStateMessage.CurrentClient;
+                updatePlayerInfoControls();
             });
         }
 
-        private void A_Click(object sender, EventArgs e)
+        private void updatePlayerInfoControls()
         {
-            iLogicLayer_PresentationLayer.OnClickBaueSiedlungen();
-        }
-
-        private void doActionAfterDelay(int secounds, MethodInvoker method)
-        {
-            Task.Factory.StartNew(() =>
+            // Den aktuellen Spieler markieren und die restlichen disablen ....
+            foreach (var playerInfoControl in Controls.OfType<PlayerInformationControl>())
             {
-                System.Threading.Thread.Sleep(secounds * 1000);
-                method.Invoke();
-            });
+                var catanClient = catanClients.Find(client => client.IPAddressPortNr.Equals(playerInfoControl.IPPort));
+
+                if (playerInfoControl.IPPort.Equals(catanClient.IPAddressPortNr))
+                {
+                    playerInfoControl.IsSelected = true;
+                    playerInfoControl.IsButtonStadtEnabled = existsTrueIn3DBoolArray(catanClient.AllowedStaedte);
+                    playerInfoControl.IsButtonStrasseEnabled = existsTrueIn3DBoolArray(catanClient.AllowedStrassen);
+                }
+                playerInfoControl.IsSelected = false;
+            }
+        }
+        private bool existsTrueIn3DBoolArray(bool[][][] array)
+        {
+            for (int i = 0; i < array?.GetLength(0); i++)
+            {
+                for (int j = 0; j < array[i].GetLength(0); j++)
+                {
+                    for (int k = 0; k < array[i][j].GetLength(0); k++)
+                    {
+                        if (array[i][j][k])
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        private PlayerInformationControl getPlayerInformationControlByClientIPPort(string ipPort)
+        {
+            foreach (var playerInfoControl in this.Controls.OfType<PlayerInformationControl>())
+            {
+                if (playerInfoControl.IPPort.Equals(ipPort))
+                {
+                    return playerInfoControl;
+                }
+            }
+            return null;
         }
         public void WaitForClientsToConnectWithServer()
         {
             if (gamePanel == null)
             {
                 setUIMode(UIMode.WaitingForClientsAfterConnectingToServer);
+            }
+        }
+
+        public void InitGamePanel(Game.Hexagon[][] hexagonFields,List<CatanClient> clients)
+        {
+            executeUICodeThreadSafe(delegate
+            {
+                if (this.gamePanel == null)
+                {
+                    this.catanClients = clients;
+
+                    this.Controls.Clear();
+                    this.Controls.Add((this.gamePanel = new PresentationLayer.GamePanel(hexagonFields)).Panel);
+                    int widthFactor = (int)(Width * 0.2f);
+                    gamePanel.Panel.Location = new Point(widthFactor, 0);
+                    gamePanel.Panel.Size = new Size(Width - (2 * widthFactor), Height);
+                    this.BackColor = gamePanel.Panel.BackColor;
+
+                    initPlayersInformationControls();
+                    updatePlayerInfoControls();
+                }
+            });
+        }
+        private void initPlayersInformationControls()
+        {
+            int y_left_offset=1;
+            int y_right_offset=1;
+
+            int y_left = 1;
+            int y_right = 1;
+
+            for (int index = 0; index < catanClients.Count; index++)
+            {
+                var playerInfoControl = new PlayerInformationControl(catanClients[index]);
+
+                if (index%2==0)
+                {
+                    playerInfoControl.Location = new Point(y_left_offset, y_left);
+                    y_left = this.Height - playerInfoControl.Height-y_left;
+                }
+                else
+                {
+                    playerInfoControl.Location = new Point(this.Width-playerInfoControl.Width- y_right_offset, y_right);
+                    y_right = this.Height - playerInfoControl.Height- y_right_offset;
+                }
+                this.Controls.Add(playerInfoControl);
             }
         }
     }
