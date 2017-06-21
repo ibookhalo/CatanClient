@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Net;
 using Catan.Network.Messaging;
 using Catan.Game;
+using System.Net.Sockets;
 
 namespace Catan.Client.LogicLayer
 {
@@ -15,7 +16,7 @@ namespace Catan.Client.LogicLayer
     {
         private Catan.Client.Interfaces.IPresentationLayer iPresentationLayer;
         private Catan.Client.Interfaces.INetworkLayer iNetworkLayer;
-        private int clientID;
+        private int myCientID;
         
         public GameLogic()
         {}
@@ -48,12 +49,17 @@ namespace Catan.Client.LogicLayer
                 // überprüfen ob das Message für mich ist
                 if ((me=gameStateMessage.Clients.Find(client => client.IPAddressPortNr.Equals(iNetworkLayer.GetLocalEndPoint().ToString())))!=null)
                 {
-                    if (clientID==0)
+                    if (myCientID==0)
                     {
-                        clientID = me.ID;
+                        myCientID = me.ID;
                         iPresentationLayer.InitGamePanel(gameStateMessage.HexagoneFields,gameStateMessage.Clients);
+                        iPresentationLayer.UpdateGame(gameStateMessage);
                     }
-                    iPresentationLayer.UpdateGame(gameStateMessage);
+                    else if (myCientID.Equals(me.ID))
+                    {
+                        iPresentationLayer.UpdateGame(gameStateMessage);
+                    }
+                    
                 }
                 /*
                 else
@@ -73,9 +79,14 @@ namespace Catan.Client.LogicLayer
             iPresentationLayer.ThrowException(exception);
         }
 
-        public void OnClickBaueSiedlungen()
+        public EndPoint GetLocalEndPoint()
         {
-            
+            return iNetworkLayer.GetLocalEndPoint();
+        }
+
+        public int GetMyClientID()
+        {
+            return myCientID;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,16 @@ namespace Catan.Client.PresentationLayer
         public float Height { protected set; get; }
         public float Width { protected set; get; }
         public Pen Pen { protected set; get; }
-        public abstract Region Region { get;}
-
+        public Region Region
+        {
+            get
+            {
+                GraphicsPath path = new GraphicsPath();
+                path.AddPolygon(RegionPoints);
+                return new Region(path);
+            }
+        }
+        public abstract PointF[] RegionPoints { get; }
         public Texture(float x, float y,float height, float width,Pen pen)
         {
             this.X = x;

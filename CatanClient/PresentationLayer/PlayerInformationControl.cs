@@ -13,10 +13,17 @@ namespace Catan.Client.PresentationLayer
 {
     public partial class PlayerInformationControl : UserControl
     {
-        private CatanClient client;
-        public string IPPort { get; private set; }
-        private bool isButtonStrasseEnabled;
-        private bool isButtonStadtEnabled;
+        public delegate void SiedlungBauenEventHandler(object ob, PlayerControlEventArg e);
+        public event SiedlungBauenEventHandler SiedlungBauenClick;
+
+        public delegate void TurnDoneEventHandler(object ob, PlayerControlEventArg e);
+        public event TurnDoneEventHandler TurnDoneClick;
+
+
+        private bool isButtonStrasseVisible;
+        private bool isButtonSiedlungVisible;
+        private bool isButtonTurnDoneVisible;
+        private bool isWaiting;
         private bool isSelected;
 
         public bool IsSelected
@@ -26,7 +33,7 @@ namespace Catan.Client.PresentationLayer
                 this.BorderStyle = value ? BorderStyle.FixedSingle : BorderStyle.None;
                 this.Enabled = value;
                 btnTurn.Visible = value;
-                btnStadtBauen.Visible = value;
+                btnSiedlungBauen.Visible = value;
                 btnStrasseBauen.Visible = value;
                 this.isSelected = value;
             }
@@ -35,52 +42,77 @@ namespace Catan.Client.PresentationLayer
                 return this.isSelected;
             }
         }
-        public bool IsButtonStrasseEnabled
+        public bool IsWaiting
+        {
+            set
+            {
+                pbWait.Visible = value;
+                this.isWaiting = value;
+            }
+            get
+            {
+                return this.isWaiting;
+            }
+        }
+        public bool IsButtonStrasseVisible
         {
             get
             {
-                return isButtonStrasseEnabled;
+                return isButtonStrasseVisible;
             }
 
             set
             {
-                this.btnStrasseBauen.Enabled = value;
-                isButtonStrasseEnabled = value;
+                this.btnStrasseBauen.Visible = value;
+                isButtonStrasseVisible = value;
             }
         }
-        public bool IsButtonStadtEnabled
+        public bool IsButtonSiedlungVisible
         {
             get
             {
-                return isButtonStadtEnabled;
+                return isButtonSiedlungVisible;
             }
 
             set
             {
-                this.btnStadtBauen.Enabled = value;
-                isButtonStadtEnabled = value;
+                this.btnSiedlungBauen.Visible = value;
+                isButtonSiedlungVisible = value;
+            }
+        }
+        public bool IsButtonTurnDoneVisible
+        {
+            get
+            {
+                return isButtonTurnDoneVisible;
+            }
+
+            set
+            {
+                this.btnTurn.Visible = value;
+                isButtonTurnDoneVisible = value;
             }
         }
 
+        public CatanClient CatanClient {get;private set;}
 
         public PlayerInformationControl(CatanClient client)
         {
             InitializeComponent();
-            this.client = client;
-
-            IPPort = client.IPAddressPortNr;
-
+            this.CatanClient = client;
+            
             this.lblPlayerName.Text = client.Name;
-            this.lblIPAddress.Text = IPPort;
             this.pnlColor.BackColor = client.Color;
+            this.lblIPAddress.Text = client.IPAddressPortNr;
 
+            this.IsWaiting = false;
             RefreshPunkte();
         }
         public void RefreshPunkte()
         {
             foreach (var rohstoffkarte in  Enum.GetValues(typeof(Game.KartenContainer.Rohstoffkarte)))
             {
-                SetAntzahlKartenByLandfeldTyp((KartenContainer.Rohstoffkarte)rohstoffkarte, client.KartenContainer.GetAnzahlByRohstoffkarte((KartenContainer.Rohstoffkarte)rohstoffkarte));
+                SetAntzahlKartenByLandfeldTyp((KartenContainer.Rohstoffkarte)rohstoffkarte, CatanClient.KartenContainer.GetAnzahlByRohstoffkarte((KartenContainer.Rohstoffkarte)rohstoffkarte));
             }
         }
 
@@ -98,6 +130,16 @@ namespace Catan.Client.PresentationLayer
                 default:
                     throw new NotImplementedException($"SetAntzahlKartenByLandfeldTyp({rohstoff},  ...)");
             }
+        }
+
+        private void btnTurn_Click(object sender, EventArgs e)
+        {
+            TurnDoneClick?.Invoke(this, new PresentationLayer.PlayerControlEventArg(this.CatanClient));
+        }
+
+        private void btnSiedlungBauen_Click(object sender, EventArgs e)
+        {
+            SiedlungBauenClick?.Invoke(this,new PresentationLayer.PlayerControlEventArg(this.CatanClient));
         }
     }
 }

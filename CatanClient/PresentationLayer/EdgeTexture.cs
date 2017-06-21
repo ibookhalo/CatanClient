@@ -8,24 +8,23 @@ using System.Threading.Tasks;
 
 namespace Catan.Client.PresentationLayer
 {
-    class Edge:Texture
+    class EdgeTexture:Texture
     {
         public PointF Point1 { private set; get; }
         public PointF Point2 { private set; get; }
         public PointF Point3 { private set; get; }
         public PointF Point4 { private set; get; }
         public float Length { get { return CalculateLength(Point1, Point2); } }
-        public override Region Region
+      
+        public override PointF[] RegionPoints
         {
             get
             {
-                GraphicsPath path = new GraphicsPath();
-                path.AddPolygon(new PointF[] { Point1, Point2, Point4, Point3 });
-                return new Region(path);
+                return new PointF[] { Point1, Point2, Point4, Point3 };
             }
         }
 
-        public Edge(PointF point1, PointF point2, PointF point3, PointF point4,Pen pen)
+        public EdgeTexture(PointF point1, PointF point2, PointF point3, PointF point4,Pen pen)
             :base(point1.X,point1.Y, Math.Abs(point1.Y - point3.Y), Math.Abs(point2.X-point1.X),pen)
         {
             this.Point1 = point1;

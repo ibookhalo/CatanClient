@@ -80,10 +80,11 @@
     <Compile Include="PresentationLayer\CustomPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PresentationLayer\Edge.cs" />
+    <Compile Include="PresentationLayer\EdgeTexture.cs" />
     <Compile Include="PresentationLayer\GamePanel.cs" />
-    <Compile Include="PresentationLayer\Hexagon.cs" />
+    <Compile Include="PresentationLayer\HexagonTexture.cs" />
     <Compile Include="PresentationLayer\ImageHelper.cs" />
+    <Compile Include="PresentationLayer\ImageLoader.cs" />
     <Compile Include="PresentationLayer\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,12 +92,15 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PresentationLayer\MessageBoxHelper.cs" />
+    <Compile Include="PresentationLayer\PlayerControlEventArg.cs" />
     <Compile Include="PresentationLayer\PlayerInformationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PresentationLayer\PlayerInformationControl.Designer.cs">
       <DependentUpon>PlayerInformationControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="PresentationLayer\SiedlungEventArgs.cs" />
+    <Compile Include="PresentationLayer\SiedlungTexture.cs" />
     <Compile Include="PresentationLayer\Texture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

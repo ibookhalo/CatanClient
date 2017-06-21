@@ -10,20 +10,20 @@ namespace Catan.Client.PresentationLayer
 {
     static class CatanHexagonGenerator
     {
-        public static Hexagon[][] GetCatanHexagoneGrid(float x,float y,float radius,Pen pen)
+        public static HexagonTexture[][] GetCatanHexagoneGrid(float x,float y,float radius,Pen pen)
         {
             // 7 Rows
-            Hexagon[][] hexGrid = new Hexagon[5][];
-            hexGrid[0] = new Hexagon[3]; // Row 0, Columns 3
-            hexGrid[1] = new Hexagon[4];
-            hexGrid[2] = new Hexagon[5];
-            hexGrid[3] = new Hexagon[4];
-            hexGrid[4] = new Hexagon[3];
+            HexagonTexture[][] hexGrid = new HexagonTexture[5][];
+            hexGrid[0] = new HexagonTexture[3]; // Row 0, Columns 3
+            hexGrid[1] = new HexagonTexture[4];
+            hexGrid[2] = new HexagonTexture[5];
+            hexGrid[3] = new HexagonTexture[4];
+            hexGrid[4] = new HexagonTexture[3];
 
-            var hexProto = new Hexagon(x, y,0,0, radius, pen, true);
+            var hexProto = new HexagonTexture(x, y,0,0, radius, pen, true);
 
             x -= hexProto.Width-pen.Width;
-            y -= hexProto.Height + (Edge.CalculateLength(hexProto.Points[2], hexProto.Points[1]))-pen.Width*2;
+            y -= hexProto.Height + (EdgeTexture.CalculateLength(hexProto.Points[2], hexProto.Points[1]))-pen.Width*2;
 
             float hexWidth = hexProto.Width;
             
@@ -37,7 +37,7 @@ namespace Catan.Client.PresentationLayer
                     if (columnIndex > 0)
                         xTemp += hexWidth-pen.Width;
 
-                    hexGrid[rowIndex][columnIndex] = new Hexagon(xTemp,yTemp,rowIndex, columnIndex, radius, pen, true);
+                    hexGrid[rowIndex][columnIndex] = new HexagonTexture(xTemp,yTemp,rowIndex, columnIndex, radius, pen, true);
                 }
             
                 if (rowIndex<2)

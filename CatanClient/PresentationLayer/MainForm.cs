@@ -24,11 +24,13 @@ namespace Catan.Client.PresentationLayer
         private GamePanel gamePanel;
         private CatanClient currentClient;
         private List<CatanClient> catanClients;
+        private List<PlayerInformationControl> clientInformationControls;
 
         public MainForm(Interfaces.ILogicLayer_PresentationLayer iLogicLayer_PresentationLayer)
         {
             InitializeComponent();
             this.iLogicLayer_PresentationLayer = iLogicLayer_PresentationLayer;
+            this.clientInformationControls = new List<PresentationLayer.PlayerInformationControl>();
         }
         private void btnConnect_Click(object sender, EventArgs e)
         {
@@ -105,17 +107,25 @@ namespace Catan.Client.PresentationLayer
         private void updatePlayerInfoControls()
         {
             // Den aktuellen Spieler markieren und die restlichen disablen ....
-            foreach (var playerInfoControl in Controls.OfType<PlayerInformationControl>())
+            foreach (var clientInfoControl in this.clientInformationControls)
             {
-                var catanClient = catanClients.Find(client => client.IPAddressPortNr.Equals(playerInfoControl.IPPort));
+                clientInfoControl.IsSelected = clientInfoControl.CatanClient.ID.Equals(currentClient.ID);
 
-                if (playerInfoControl.IPPort.Equals(catanClient.IPAddressPortNr))
+                // me ?
+                if (clientInfoControl.CatanClient.ID.Equals(iLogicLayer_PresentationLayer.GetMyClientID()) &&
+                    currentClient.ID.Equals(iLogicLayer_PresentationLayer.GetMyClientID()))
                 {
-                    playerInfoControl.IsSelected = true;
-                    playerInfoControl.IsButtonStadtEnabled = existsTrueIn3DBoolArray(catanClient.AllowedStaedte);
-                    playerInfoControl.IsButtonStrasseEnabled = existsTrueIn3DBoolArray(catanClient.AllowedStrassen);
+                    
+                    clientInfoControl.IsButtonSiedlungVisible = existsTrueIn3DBoolArray(clientInfoControl.CatanClient.AllowedSiedlungen);
+                    clientInfoControl.IsButtonStrasseVisible = existsTrueIn3DBoolArray(clientInfoControl.CatanClient.AllowedStrassen);
+                    clientInfoControl.IsButtonTurnDoneVisible = true;
                 }
-                playerInfoControl.IsSelected = false;
+                else
+                {
+                    clientInfoControl.IsButtonTurnDoneVisible=clientInfoControl.IsButtonSiedlungVisible = clientInfoControl.IsButtonStrasseVisible = false;
+                    clientInfoControl.IsWaiting = clientInfoControl.CatanClient.ID.Equals(currentClient.ID);
+                }
+                clientInfoControl.RefreshPunkte();
             }
         }
         private bool existsTrueIn3DBoolArray(bool[][][] array)
@@ -140,7 +150,7 @@ namespace Catan.Client.PresentationLayer
         {
             foreach (var playerInfoControl in this.Controls.OfType<PlayerInformationControl>())
             {
-                if (playerInfoControl.IPPort.Equals(ipPort))
+                if (playerInfoControl.CatanClient.IPAddressPortNr.Equals(ipPort))
                 {
                     return playerInfoControl;
                 }
@@ -171,7 +181,6 @@ namespace Catan.Client.PresentationLayer
                     this.BackColor = gamePanel.Panel.BackColor;
 
                     initPlayersInformationControls();
-                    updatePlayerInfoControls();
                 }
             });
         }
@@ -198,7 +207,24 @@ namespace Catan.Client.PresentationLayer
                     y_right = this.Height - playerInfoControl.Height- y_right_offset;
                 }
                 this.Controls.Add(playerInfoControl);
+                this.clientInformationControls.Add(playerInfoControl);
+
+                if (catanClients[index].ID.Equals(iLogicLayer_PresentationLayer.GetMyClientID()))
+                {
+                    playerInfoControl.SiedlungBauenClick += PlayerInfoControl_OnClickSiedlungbauen;
+                    playerInfoControl.TurnDoneClick += PlayerInfoControl_OnClickTurndone;
+                }
             }
+        }
+
+        private void PlayerInfoControl_OnClickTurndone(object ob, PlayerControlEventArg e)
+        {
+            
+        }
+
+        private void PlayerInfoControl_OnClickSiedlungbauen(object ob, PlayerControlEventArg e)
+        {
+            gamePanel.DrawSiedlungen(e.Client.Color,e.Client.AllowedSiedlungen);
         }
     }
 }
