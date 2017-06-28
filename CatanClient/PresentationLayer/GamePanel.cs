@@ -206,9 +206,9 @@ namespace Catan.Client.PresentationLayer
                             if (strassen[hexagonRowIndex][hexagonColumnIndex][hexagonPointIndex])
                             {
 
-                                StrasseTexture strasse = getStrasseTextureByServerStrasse(new Strasse(new HexagonPosition(hexagonRowIndex, hexagonColumnIndex),
-                                                                                              new HexagonEdge(null,null,hexagonPointIndex)));
-                                this.protoTypStrassen.Add(strasse);
+                               // StrasseTexture strasse = getStrasseTextureByServerStrasse(new Strasse(new HexagonPosition(hexagonRowIndex, hexagonColumnIndex),
+                                 //                                                             new HexagonEdge(null,null,hexagonPointIndex)));
+                                //this.protoTypStrassen.Add(strasse);
                             }
                         }
                     }
@@ -230,12 +230,13 @@ namespace Catan.Client.PresentationLayer
 
         private StrasseTexture getStrasseTextureByServerStrasse(Strasse serverStrasse,Color color)
         {
-            int hexPointIndex = 0;
-            var hexPoint = this.foregroundHexagones[serverSiedlung.HexagonPosition.RowIndex][serverSiedlung.HexagonPosition.ColumnIndex].
-                Points[hexPointIndex = getClientHexagonPointIndexByServerHexagonPointIndex(serverSiedlung.HexagonPoint.Index)];
+            /* int hexPointIndex = 0;
+             var hexPoint = this.foregroundHexagones[serverSiedlung.HexagonPosition.RowIndex][serverSiedlung.HexagonPosition.ColumnIndex].
+                 Points[hexPointIndex = getClientHexagonPointIndexByServerHexagonPointIndex(serverSiedlung.HexagonPoint.Index)];
 
-            return new StrasseTexture(new HexagonPositionHexagonPoint(serverSiedlung.HexagonPosition, new HexagonPoint(hexPointIndex)),
-                hexPoint.X, hexPoint.Y, 40, 40, new Pen(color));
+             return new StrasseTexture(new HexagonPositionHexagonPoint(serverSiedlung.HexagonPosition, new HexagonPoint(hexPointIndex)),
+                 hexPoint.X, hexPoint.Y, 40, 40, new Pen(color));*/
+            return null;
         }
 
         public void DrawSpielFiguren(List<CatanClient> clients)

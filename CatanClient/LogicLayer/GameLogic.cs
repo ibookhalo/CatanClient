@@ -95,5 +95,10 @@ namespace Catan.Client.LogicLayer
             newSpielFiguren.Add(new Catan.Game.Siedlung(siedlung.HexagonPositionHexagonPoint.HexagonPosition, siedlung.HexagonPositionHexagonPoint.HexagonPoint));
             iNetworkLayer.SendMessage(new Network.Messaging.CatanClientStateChangeMessage(newSpielFiguren,null,null, myCientID, false));
         }
+
+        public void BaueStrasse(StrasseTexture clickedStrasse)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
