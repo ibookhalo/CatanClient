@@ -14,21 +14,36 @@ namespace Catan.Client.PresentationLayer
     class GamePanel
     {
         public delegate void SiedlungEventHandler(object ob,SiedlungEventArgs e);
-        public event SiedlungEventHandler SiedlungGebautClick;
+        public event SiedlungEventHandler SiedlungClick;
+
+        public delegate void StrasseEventHandler(object ob, StrasseEventArgs e);
+        public event StrasseEventHandler StrasseClick;
+
 
         public  CustomPanel Panel { private set; get; }
 
         private HexagonTexture backgroundHexagon;
         private HexagonTexture[][] foregroundHexagones;
         private Game.Hexagon[][] hexagoneFields; // vom Server generiert !
+
         private List<SiedlungTexture> protoTypSiedlungen;
+        private List<StrasseTexture> protoTypStrassen;
+
+        private List<CatanClient> catanClients;
 
         private Pen penBackgroundHex, penForegroundHex;
+
+        private bool shouldDrawProtoSiedlungen;
+        private bool shouldDrawProtoStrassen;
 
         public GamePanel(Game.Hexagon[][] hexagonFields)
         {
             this.hexagoneFields = hexagonFields;
+
             this.protoTypSiedlungen = new List<PresentationLayer.SiedlungTexture>();
+            this.protoTypStrassen = new List<PresentationLayer.StrasseTexture>();
+
+            this.catanClients = new List<CatanClient>();
 
             Panel = new PresentationLayer.CustomPanel();
 
@@ -41,15 +56,25 @@ namespace Catan.Client.PresentationLayer
 
         private void Panel_MouseClick(object sender, MouseEventArgs e)
         {
+            #region Siedlung Click?
+
             var foundSiedlung = protoTypSiedlungen.Find(siedlung => siedlung.Region.IsVisible(e.X, e.Y));
-            if (foundSiedlung!=null)
+            if (foundSiedlung != null)
             {
                 // Transform from Client hexPoint to Server hexPoint
-                foundSiedlung = new SiedlungTexture(new HexagonPositionHexagonPoint(foundSiedlung.HexagonPositionHexagonPoint.HexagonPosition,new HexagonPoint(getServerHexagonPointIndexByClientHexagonPointIndex(foundSiedlung.HexagonPositionHexagonPoint.HexagonPoint.Index))),
+                foundSiedlung = new SiedlungTexture(new HexagonPositionHexagonPoint(foundSiedlung.HexagonPositionHexagonPoint.HexagonPosition, new HexagonPoint(getServerHexagonPointIndexByClientHexagonPointIndex(foundSiedlung.HexagonPositionHexagonPoint.HexagonPoint.Index))),
                     foundSiedlung.X, foundSiedlung.Y, foundSiedlung.Height, foundSiedlung.Width, foundSiedlung.Pen);
 
-                SiedlungGebautClick?.Invoke(this, new PresentationLayer.SiedlungEventArgs(foundSiedlung));
+                SiedlungClick?.Invoke(this, new PresentationLayer.SiedlungEventArgs(foundSiedlung));
             }
+
+            #endregion
+
+            #region Strasse Click?
+
+
+
+            #endregion
         }
 
         private void Panel_Paint(object sender, PaintEventArgs e)
@@ -85,8 +110,31 @@ namespace Catan.Client.PresentationLayer
 
             #region PrototypSiedlungen
 
-            protoTypSiedlungen.ForEach(siedlung => siedlung.Draw(e.Graphics));
-            
+            if (shouldDrawProtoSiedlungen)
+            {
+                protoTypSiedlungen.ForEach(siedlung => siedlung.Draw(e.Graphics));
+                shouldDrawProtoSiedlungen = false;
+            }
+
+            #endregion
+
+            #region ProtoStrassen
+
+
+
+            #endregion
+
+            #region SpielFiguren
+
+            foreach (var client in this.catanClients)
+            {
+                foreach (var siedlung in client.SpielfigurenContainer?.Siedlungen)
+                {
+                    var siedlungTexture = getSiedlungTextureByServerSiedlung(siedlung, client.Color);
+                    siedlungTexture.Draw(e.Graphics);
+                }
+            }
+
             #endregion
         }
         private int getClientHexagonPointIndexByServerHexagonPointIndex(int serverHexagonPointIndex)
@@ -103,6 +151,7 @@ namespace Catan.Client.PresentationLayer
                     throw new NotImplementedException("getClientHexagonPointIndexByServerHexagonPointIndex no match serverHexagonPointIndex");
             }
         }
+
         private int getServerHexagonPointIndexByClientHexagonPointIndex(int clientHexagonPointIndex)
         {
             switch (clientHexagonPointIndex)
@@ -120,28 +169,80 @@ namespace Catan.Client.PresentationLayer
 
         public void DrawPrototypSiedlungen(bool[][][] siedlungen)
         {
-            this.protoTypSiedlungen.Clear();
-
-            for (int hexagonRowIndex = 0; hexagonRowIndex < siedlungen.GetLength(0); hexagonRowIndex++)
+            if (this.protoTypSiedlungen.Count <= 0)
             {
-                for (int hexagonColumnIndex = 0; hexagonColumnIndex < siedlungen[hexagonRowIndex].GetLength(0); hexagonColumnIndex++)
+                for (int hexagonRowIndex = 0; hexagonRowIndex < siedlungen.GetLength(0); hexagonRowIndex++)
                 {
-                    for (int hexagonPointIndex = 0; hexagonPointIndex < siedlungen[hexagonRowIndex][hexagonColumnIndex].GetLength(0); hexagonPointIndex++)
+                    for (int hexagonColumnIndex = 0; hexagonColumnIndex < siedlungen[hexagonRowIndex].GetLength(0); hexagonColumnIndex++)
                     {
-                        if (siedlungen[hexagonRowIndex][hexagonColumnIndex][hexagonPointIndex])
+                        for (int hexagonPointIndex = 0; hexagonPointIndex < siedlungen[hexagonRowIndex][hexagonColumnIndex].GetLength(0); hexagonPointIndex++)
                         {
-                            int hexPointIndex = 0;
-                            var hexPoint = this.foregroundHexagones[hexagonRowIndex][hexagonColumnIndex].Points[hexPointIndex=getClientHexagonPointIndexByServerHexagonPointIndex(hexagonPointIndex)];
-                            SiedlungTexture siedlung = new SiedlungTexture(new HexagonPositionHexagonPoint(new HexagonPosition(hexagonRowIndex,hexagonColumnIndex),new HexagonPoint(hexPointIndex)),
-                                hexPoint.X, hexPoint.Y, 40, 40,new Pen(Color.Gray));
+                            if (siedlungen[hexagonRowIndex][hexagonColumnIndex][hexagonPointIndex])
+                            {
 
-                            this.protoTypSiedlungen.Add(siedlung);
-
-                            Panel.Invalidate(siedlung.Region);
+                                SiedlungTexture siedlung = getSiedlungTextureByServerSiedlung(new Siedlung(new HexagonPosition(hexagonRowIndex, hexagonColumnIndex),
+                                                                                              new HexagonPoint(hexagonPointIndex)), Color.Gray);
+                                this.protoTypSiedlungen.Add(siedlung);
+                            }
                         }
                     }
                 }
             }
+
+            this.shouldDrawProtoSiedlungen = true;
+            this.protoTypSiedlungen.ForEach(protoSiedlung => Panel.Invalidate(protoSiedlung.Region));
         }
+
+        public void DrawPrototypStrassen(bool [][][] strassen)
+        {
+            if (this.protoTypStrassen.Count <= 0)
+            {
+                for (int hexagonRowIndex = 0; hexagonRowIndex < strassen.GetLength(0); hexagonRowIndex++)
+                {
+                    for (int hexagonColumnIndex = 0; hexagonColumnIndex < strassen[hexagonRowIndex].GetLength(0); hexagonColumnIndex++)
+                    {
+                        for (int hexagonPointIndex = 0; hexagonPointIndex < strassen[hexagonRowIndex][hexagonColumnIndex].GetLength(0); hexagonPointIndex++)
+                        {
+                            if (strassen[hexagonRowIndex][hexagonColumnIndex][hexagonPointIndex])
+                            {
+
+                                StrasseTexture strasse = getStrasseTextureByServerStrasse(new Strasse(new HexagonPosition(hexagonRowIndex, hexagonColumnIndex),
+                                                                                              new HexagonEdge(null,null,hexagonPointIndex)));
+                                this.protoTypStrassen.Add(strasse);
+                            }
+                        }
+                    }
+                }
+            }
+
+            this.shouldDrawProtoStrassen = true;
+            this.protoTypStrassen.ForEach(protoStrasse => Panel.Invalidate(protoStrasse.Region));
+        }
+        private SiedlungTexture getSiedlungTextureByServerSiedlung(Siedlung serverSiedlung, Color color)
+        {
+            int hexPointIndex = 0;
+            var hexPoint = this.foregroundHexagones[serverSiedlung.HexagonPosition.RowIndex][serverSiedlung.HexagonPosition.ColumnIndex].
+                Points[hexPointIndex = getClientHexagonPointIndexByServerHexagonPointIndex(serverSiedlung.HexagonPoint.Index)];
+
+            return new SiedlungTexture(new HexagonPositionHexagonPoint(serverSiedlung.HexagonPosition, new HexagonPoint(hexPointIndex)),
+                hexPoint.X, hexPoint.Y, 40, 40, new Pen(color));
+        }
+
+        private StrasseTexture getStrasseTextureByServerStrasse(Strasse serverStrasse,Color color)
+        {
+            int hexPointIndex = 0;
+            var hexPoint = this.foregroundHexagones[serverSiedlung.HexagonPosition.RowIndex][serverSiedlung.HexagonPosition.ColumnIndex].
+                Points[hexPointIndex = getClientHexagonPointIndexByServerHexagonPointIndex(serverSiedlung.HexagonPoint.Index)];
+
+            return new StrasseTexture(new HexagonPositionHexagonPoint(serverSiedlung.HexagonPosition, new HexagonPoint(hexPointIndex)),
+                hexPoint.X, hexPoint.Y, 40, 40, new Pen(color));
+        }
+
+        public void DrawSpielFiguren(List<CatanClient> clients)
+        {
+            this.catanClients = clients;
+            Panel.Invalidate();
+        }
+
     }
 }

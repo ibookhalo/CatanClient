@@ -328,6 +328,7 @@
             this.btnStrasseBauen.Size = new System.Drawing.Size(71, 42);
             this.btnStrasseBauen.TabIndex = 26;
             this.btnStrasseBauen.UseVisualStyleBackColor = false;
+            this.btnStrasseBauen.Click += new System.EventHandler(this.btnStrasseBauen_Click);
             // 
             // pbWait
             // 

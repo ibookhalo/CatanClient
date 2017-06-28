@@ -97,18 +97,24 @@ namespace Catan.Client.PresentationLayer
         }
         public void UpdateGame(GameStateMessage gameStateMessage)
         {
+            this.catanClients = gameStateMessage.Clients;
+            this.currentClient = gameStateMessage.CurrentClient;
+
             executeUICodeThreadSafe(delegate
             {
-                this.currentClient = gameStateMessage.CurrentClient;
                 updatePlayerInfoControls();
+                gamePanel.DrawSpielFiguren(gameStateMessage.Clients);
             });
         }
-
+        
         private void updatePlayerInfoControls()
         {
             // Den aktuellen Spieler markieren und die restlichen disablen ....
             foreach (var clientInfoControl in this.clientInformationControls)
             {
+                clientInfoControl.RefreshClientData(this.catanClients.Find(client => client.ID == clientInfoControl.CatanClient.ID));
+
+
                 clientInfoControl.IsSelected = clientInfoControl.CatanClient.ID.Equals(currentClient.ID);
 
                 // me ?
@@ -175,7 +181,9 @@ namespace Catan.Client.PresentationLayer
 
                     this.Controls.Clear();
                     this.Controls.Add((this.gamePanel = new PresentationLayer.GamePanel(hexagonFields)).Panel);
-                    this.gamePanel.SiedlungGebautClick += GamePanel_SiedlungGebautClick; ;
+                    this.gamePanel.SiedlungClick += GamePanel_SiedlungClick;
+                    this.gamePanel.StrasseClick += GamePanel_StrasseClick;
+
                     int widthFactor = (int)(Width * 0.2f);
                     gamePanel.Panel.Location = new Point(widthFactor, 0);
                     gamePanel.Panel.Size = new Size(Width - (2 * widthFactor), Height);
@@ -186,7 +194,11 @@ namespace Catan.Client.PresentationLayer
             });
         }
 
-        private void GamePanel_SiedlungGebautClick(object ob, SiedlungEventArgs e)
+        private void GamePanel_StrasseClick(object ob, StrasseEventArgs e)
+        {
+            this.iPresentationLayer_LogicLayer.BaueStrasse(e.ClickedStrasse);
+        }
+        private void GamePanel_SiedlungClick(object ob, SiedlungEventArgs e)
         {
             this.iPresentationLayer_LogicLayer.BaueSiedlung(e.ClickedSiedlung);
         }
@@ -219,9 +231,15 @@ namespace Catan.Client.PresentationLayer
                 if (catanClients[index].ID.Equals(iPresentationLayer_LogicLayer.GetMyClientID()))
                 {
                     playerInfoControl.SiedlungBauenClick += PlayerInfoControl_OnClickSiedlungbauen;
+                    playerInfoControl.StrasseBauenClick += PlayerInfoControl_StrasseBauenClick;
                     playerInfoControl.TurnDoneClick += PlayerInfoControl_OnClickTurndone;
                 }
             }
+        }
+
+        private void PlayerInfoControl_StrasseBauenClick(object ob, PlayerControlEventArg e)
+        {
+            gamePanel.DrawPrototypStrassen(e.Client.AllowedStrassen);
         }
 
         private void PlayerInfoControl_OnClickTurndone(object ob, PlayerControlEventArg e)

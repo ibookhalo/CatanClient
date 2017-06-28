@@ -14,5 +14,6 @@ namespace Catan.Client.Interfaces
         void ConnectToCatanServerAsync(IPAddress serverIp, string authPass, string playerName);
         int GetMyClientID();
         void BaueSiedlung(SiedlungTexture siedlung);
+        void BaueStrasse(StrasseTexture clickedStrasse);
     }
 }

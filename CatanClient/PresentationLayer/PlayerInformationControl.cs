@@ -16,6 +16,9 @@ namespace Catan.Client.PresentationLayer
         public delegate void SiedlungBauenEventHandler(object ob, PlayerControlEventArg e);
         public event SiedlungBauenEventHandler SiedlungBauenClick;
 
+        public delegate void StrasseBauenEventHandler(object ob, PlayerControlEventArg e);
+        public event StrasseBauenEventHandler StrasseBauenClick;
+
         public delegate void TurnDoneEventHandler(object ob, PlayerControlEventArg e);
         public event TurnDoneEventHandler TurnDoneClick;
 
@@ -108,6 +111,13 @@ namespace Catan.Client.PresentationLayer
             this.IsWaiting = false;
             RefreshPunkte();
         }
+        public void RefreshClientData(CatanClient client)
+        {
+            if (client.ID != CatanClient.ID)
+                throw new ArgumentException();
+
+            this.CatanClient = client;
+        }
         public void RefreshPunkte()
         {
             foreach (var rohstoffkarte in  Enum.GetValues(typeof(Game.KartenContainer.Rohstoffkarte)))
@@ -140,6 +150,11 @@ namespace Catan.Client.PresentationLayer
         private void btnSiedlungBauen_Click(object sender, EventArgs e)
         {
             SiedlungBauenClick?.Invoke(this,new PresentationLayer.PlayerControlEventArg(this.CatanClient));
+        }
+
+        private void btnStrasseBauen_Click(object sender, EventArgs e)
+        {
+            StrasseBauenClick?.Invoke(this, new PresentationLayer.PlayerControlEventArg(this.CatanClient));
         }
     }
 }

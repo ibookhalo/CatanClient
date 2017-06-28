@@ -102,6 +102,8 @@
     </Compile>
     <Compile Include="PresentationLayer\SiedlungEventArgs.cs" />
     <Compile Include="PresentationLayer\SiedlungTexture.cs" />
+    <Compile Include="PresentationLayer\StrasseEventArgs.cs" />
+    <Compile Include="PresentationLayer\StrasseTexture.cs" />
     <Compile Include="PresentationLayer\Texture.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
