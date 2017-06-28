@@ -20,16 +20,16 @@ namespace Catan.Client.PresentationLayer
     {
         private enum UIMode { LoadingDuringConnecting, WaitingForClientsAfterConnectingToServer, MainForm }
 
-        private Interfaces.ILogicLayer_PresentationLayer iLogicLayer_PresentationLayer;
+        private Interfaces.IPresentationLayer_LogicLayer iPresentationLayer_LogicLayer;
         private GamePanel gamePanel;
         private CatanClient currentClient;
         private List<CatanClient> catanClients;
         private List<PlayerInformationControl> clientInformationControls;
 
-        public MainForm(Interfaces.ILogicLayer_PresentationLayer iLogicLayer_PresentationLayer)
+        public MainForm(Interfaces.IPresentationLayer_LogicLayer iLogicLayer_PresentationLayer)
         {
             InitializeComponent();
-            this.iLogicLayer_PresentationLayer = iLogicLayer_PresentationLayer;
+            this.iPresentationLayer_LogicLayer = iLogicLayer_PresentationLayer;
             this.clientInformationControls = new List<PresentationLayer.PlayerInformationControl>();
         }
         private void btnConnect_Click(object sender, EventArgs e)
@@ -46,7 +46,7 @@ namespace Catan.Client.PresentationLayer
                 IPAddress serverIp;
                 if (IPAddress.TryParse(tbServerIPAddress.Text, out serverIp))
                 {
-                    iLogicLayer_PresentationLayer.ConnectToCatanServerAsync(serverIp, tbPassword.Text, tbNickname.Text);
+                    iPresentationLayer_LogicLayer.ConnectToCatanServerAsync(serverIp, tbPassword.Text, tbNickname.Text);
                     setUIMode(UIMode.LoadingDuringConnecting);
                 }
                 else
@@ -112,8 +112,8 @@ namespace Catan.Client.PresentationLayer
                 clientInfoControl.IsSelected = clientInfoControl.CatanClient.ID.Equals(currentClient.ID);
 
                 // me ?
-                if (clientInfoControl.CatanClient.ID.Equals(iLogicLayer_PresentationLayer.GetMyClientID()) &&
-                    currentClient.ID.Equals(iLogicLayer_PresentationLayer.GetMyClientID()))
+                if (clientInfoControl.CatanClient.ID.Equals(iPresentationLayer_LogicLayer.GetMyClientID()) &&
+                    currentClient.ID.Equals(iPresentationLayer_LogicLayer.GetMyClientID()))
                 {
                     
                     clientInfoControl.IsButtonSiedlungVisible = existsTrueIn3DBoolArray(clientInfoControl.CatanClient.AllowedSiedlungen);
@@ -175,6 +175,7 @@ namespace Catan.Client.PresentationLayer
 
                     this.Controls.Clear();
                     this.Controls.Add((this.gamePanel = new PresentationLayer.GamePanel(hexagonFields)).Panel);
+                    this.gamePanel.SiedlungGebautClick += GamePanel_SiedlungGebautClick; ;
                     int widthFactor = (int)(Width * 0.2f);
                     gamePanel.Panel.Location = new Point(widthFactor, 0);
                     gamePanel.Panel.Size = new Size(Width - (2 * widthFactor), Height);
@@ -184,6 +185,12 @@ namespace Catan.Client.PresentationLayer
                 }
             });
         }
+
+        private void GamePanel_SiedlungGebautClick(object ob, SiedlungEventArgs e)
+        {
+            this.iPresentationLayer_LogicLayer.BaueSiedlung(e.ClickedSiedlung);
+        }
+
         private void initPlayersInformationControls()
         {
             int y_left_offset=1;
@@ -209,7 +216,7 @@ namespace Catan.Client.PresentationLayer
                 this.Controls.Add(playerInfoControl);
                 this.clientInformationControls.Add(playerInfoControl);
 
-                if (catanClients[index].ID.Equals(iLogicLayer_PresentationLayer.GetMyClientID()))
+                if (catanClients[index].ID.Equals(iPresentationLayer_LogicLayer.GetMyClientID()))
                 {
                     playerInfoControl.SiedlungBauenClick += PlayerInfoControl_OnClickSiedlungbauen;
                     playerInfoControl.TurnDoneClick += PlayerInfoControl_OnClickTurndone;
@@ -224,7 +231,7 @@ namespace Catan.Client.PresentationLayer
 
         private void PlayerInfoControl_OnClickSiedlungbauen(object ob, PlayerControlEventArg e)
         {
-            gamePanel.DrawSiedlungen(e.Client.Color,e.Client.AllowedSiedlungen);
+            gamePanel.DrawPrototypSiedlungen(e.Client.AllowedSiedlungen);
         }
     }
 }

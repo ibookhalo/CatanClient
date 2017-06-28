@@ -13,14 +13,14 @@ namespace Catan.Client.NetworkLayer
 {
     class CatanTcpClient:INetworkLayer
     {
-        private ILogicLayer_NetworkLayer iLogicLayer_NetworkLayer;
+        private INetwork_LogicLayer iLogicLayer_NetworkLayer;
         public TcpClient TcpClient { private set; get; }
         private IPAddress serverIpAddress;
         private const ushort SERVER_PORT = 123;
         private const string AUTH_ERROR_EXCEPTION_MSG = "Fehler bei der Authentifizierung";
 
 
-        public CatanTcpClient(IPAddress serverIpAddress, ILogicLayer_NetworkLayer iLogicLayer_NetworkLayer)
+        public CatanTcpClient(IPAddress serverIpAddress, INetwork_LogicLayer iLogicLayer_NetworkLayer)
         {
             this.iLogicLayer_NetworkLayer = iLogicLayer_NetworkLayer;
             this.TcpClient = new TcpClient();
@@ -97,6 +97,24 @@ namespace Catan.Client.NetworkLayer
         public void Disconnect()
         {
             TcpClient?.Close();
+        }
+
+        public void SendMessage(CatanClientStateChangeMessage catanClientStateChangeMessage)
+        {
+            Network.Messaging.NetworkMessageWriter messageWriter = new NetworkMessageWriter(this.TcpClient);
+            messageWriter.WriteCompleted += MessageWriter_WriteCompleted;
+            messageWriter.WriteError += MessageWriter_WriteError;
+            messageWriter.WriteAsync(catanClientStateChangeMessage);
+        }
+
+        private void MessageWriter_WriteError(object obj, NetworkMessageWriterWriteErrorEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MessageWriter_WriteCompleted(object obj, NetworkMessageWriterWriteCompletedEventArgs e)
+        {
+            
         }
     }
 }

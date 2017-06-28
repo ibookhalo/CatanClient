@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Client.PresentationLayer
 {
-    abstract class Texture
+    public abstract class Texture
     {
         public float X { protected set; get; }
         public float Y { protected set; get; }

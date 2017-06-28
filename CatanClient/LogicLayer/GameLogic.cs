@@ -12,7 +12,7 @@ using System.Net.Sockets;
 
 namespace Catan.Client.LogicLayer
 {
-    class GameLogic : Interfaces.ILogicLayer_NetworkLayer, Interfaces.ILogicLayer_PresentationLayer
+    class GameLogic : Interfaces.INetwork_LogicLayer, Interfaces.IPresentationLayer_LogicLayer
     {
         private Catan.Client.Interfaces.IPresentationLayer iPresentationLayer;
         private Catan.Client.Interfaces.INetworkLayer iNetworkLayer;
@@ -87,6 +87,13 @@ namespace Catan.Client.LogicLayer
         public int GetMyClientID()
         {
             return myCientID;
+        }
+
+        public void BaueSiedlung(SiedlungTexture siedlung)
+        {
+            var newSpielFiguren= new List<SpielFigur>();
+            newSpielFiguren.Add(new Catan.Game.Siedlung(siedlung.HexagonPositionHexagonPoint.HexagonPosition, siedlung.HexagonPositionHexagonPoint.HexagonPoint));
+            iNetworkLayer.SendMessage(new Network.Messaging.CatanClientStateChangeMessage(newSpielFiguren,null,null,GetMyClientID()));
         }
     }
 }

@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 
 namespace Catan.Client.PresentationLayer
 {
-    class SiedlungTexture : Texture
+   public class SiedlungTexture : Texture
     {
-        public SiedlungTexture(float x, float y, float height, float width, Pen pen) : base(x, y, height, width, pen)
+        public HexagonPositionHexagonPoint HexagonPositionHexagonPoint { private set; get; }
+        private int v1;
+        private int v2;
+
+        public SiedlungTexture(HexagonPositionHexagonPoint hexagonPositionHexagonPoint, float x, float y, float height, float width, Pen pen) : base(x, y, height, width, pen)
         {
             // translate x, y to center
             X -= Width / 2;
             Y -= Height / 2;
+            this.HexagonPositionHexagonPoint = hexagonPositionHexagonPoint;
         }
 
         public override PointF[] RegionPoints

@@ -70,8 +70,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\ILogicLayer_NetworkLayer.cs" />
-    <Compile Include="Interfaces\ILogicLayer_PresentationLayer.cs" />
+    <Compile Include="Interfaces\INetwork_LogicLayer.cs" />
+    <Compile Include="Interfaces\IPresentationLayer_LogicLayer.cs" />
     <Compile Include="Interfaces\INetworkLayer.cs" />
     <Compile Include="Interfaces\IPresentationLayer.cs" />
     <Compile Include="LogicLayer\GameLogic.cs" />
@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="PresentationLayer\EdgeTexture.cs" />
     <Compile Include="PresentationLayer\GamePanel.cs" />
+    <Compile Include="PresentationLayer\HexagonPositionHexagonPoint.cs" />
     <Compile Include="PresentationLayer\HexagonTexture.cs" />
     <Compile Include="PresentationLayer\ImageHelper.cs" />
     <Compile Include="PresentationLayer\ImageLoader.cs" />

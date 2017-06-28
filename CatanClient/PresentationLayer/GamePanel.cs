@@ -14,21 +14,21 @@ namespace Catan.Client.PresentationLayer
     class GamePanel
     {
         public delegate void SiedlungEventHandler(object ob,SiedlungEventArgs e);
-        public event SiedlungEventHandler SiedlungClick;
+        public event SiedlungEventHandler SiedlungGebautClick;
 
         public  CustomPanel Panel { private set; get; }
 
         private HexagonTexture backgroundHexagon;
         private HexagonTexture[][] foregroundHexagones;
         private Game.Hexagon[][] hexagoneFields; // vom Server generiert !
-        private List<SiedlungTexture> siedlungen;
+        private List<SiedlungTexture> protoTypSiedlungen;
 
         private Pen penBackgroundHex, penForegroundHex;
 
         public GamePanel(Game.Hexagon[][] hexagonFields)
         {
             this.hexagoneFields = hexagonFields;
-            this.siedlungen = new List<PresentationLayer.SiedlungTexture>();
+            this.protoTypSiedlungen = new List<PresentationLayer.SiedlungTexture>();
 
             Panel = new PresentationLayer.CustomPanel();
 
@@ -41,10 +41,14 @@ namespace Catan.Client.PresentationLayer
 
         private void Panel_MouseClick(object sender, MouseEventArgs e)
         {
-            var foundSiedlung = siedlungen.Find(siedlung => siedlung.Region.IsVisible(e.X, e.Y));
+            var foundSiedlung = protoTypSiedlungen.Find(siedlung => siedlung.Region.IsVisible(e.X, e.Y));
             if (foundSiedlung!=null)
             {
-                SiedlungClick?.Invoke(this,new PresentationLayer.SiedlungEventArgs())
+                // Transform from Client hexPoint to Server hexPoint
+                foundSiedlung = new SiedlungTexture(new HexagonPositionHexagonPoint(foundSiedlung.HexagonPositionHexagonPoint.HexagonPosition,new HexagonPoint(getServerHexagonPointIndexByClientHexagonPointIndex(foundSiedlung.HexagonPositionHexagonPoint.HexagonPoint.Index))),
+                    foundSiedlung.X, foundSiedlung.Y, foundSiedlung.Height, foundSiedlung.Width, foundSiedlung.Pen);
+
+                SiedlungGebautClick?.Invoke(this, new PresentationLayer.SiedlungEventArgs(foundSiedlung));
             }
         }
 
@@ -79,9 +83,9 @@ namespace Catan.Client.PresentationLayer
 
             #endregion
 
-            #region Siedlungen
+            #region PrototypSiedlungen
 
-            siedlungen.ForEach(siedlung => siedlung.Draw(e.Graphics));
+            protoTypSiedlungen.ForEach(siedlung => siedlung.Draw(e.Graphics));
             
             #endregion
         }
@@ -99,9 +103,24 @@ namespace Catan.Client.PresentationLayer
                     throw new NotImplementedException("getClientHexagonPointIndexByServerHexagonPointIndex no match serverHexagonPointIndex");
             }
         }
-        public void DrawSiedlungen(Color color, bool[][][] siedlungen)
+        private int getServerHexagonPointIndexByClientHexagonPointIndex(int clientHexagonPointIndex)
         {
-            this.siedlungen.Clear();
+            switch (clientHexagonPointIndex)
+            {
+                case 3: return 0;
+                case 2: return 1;
+                case 1: return 2;
+                case 0: return 3;
+                case 5: return 4;
+                case 4: return 5;
+                default:
+                    throw new NotImplementedException("getServerHexagonPointIndexByClientHexagonPointIndex no match serverHexagonPointIndex");
+            }
+        }
+
+        public void DrawPrototypSiedlungen(bool[][][] siedlungen)
+        {
+            this.protoTypSiedlungen.Clear();
 
             for (int hexagonRowIndex = 0; hexagonRowIndex < siedlungen.GetLength(0); hexagonRowIndex++)
             {
@@ -111,9 +130,12 @@ namespace Catan.Client.PresentationLayer
                     {
                         if (siedlungen[hexagonRowIndex][hexagonColumnIndex][hexagonPointIndex])
                         {
-                            var hexPoint = this.foregroundHexagones[hexagonRowIndex][hexagonColumnIndex].Points[getClientHexagonPointIndexByServerHexagonPointIndex(hexagonPointIndex)];
-                            SiedlungTexture siedlung = new SiedlungTexture(hexPoint.X, hexPoint.Y, 40, 40,new Pen(color));
-                            this.siedlungen.Add(siedlung);
+                            int hexPointIndex = 0;
+                            var hexPoint = this.foregroundHexagones[hexagonRowIndex][hexagonColumnIndex].Points[hexPointIndex=getClientHexagonPointIndexByServerHexagonPointIndex(hexagonPointIndex)];
+                            SiedlungTexture siedlung = new SiedlungTexture(new HexagonPositionHexagonPoint(new HexagonPosition(hexagonRowIndex,hexagonColumnIndex),new HexagonPoint(hexPointIndex)),
+                                hexPoint.X, hexPoint.Y, 40, 40,new Pen(Color.Gray));
+
+                            this.protoTypSiedlungen.Add(siedlung);
 
                             Panel.Invalidate(siedlung.Region);
                         }

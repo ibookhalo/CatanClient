@@ -13,5 +13,6 @@ namespace Catan.Client.Interfaces
         void ConnectToCatanServerAsync(CatanClientAuthenticationRequestMessage catanAuthMessage);
         void Disconnect();
         EndPoint GetLocalEndPoint();
+        void SendMessage(CatanClientStateChangeMessage catanClientStateChangeMessage);
     }
 }

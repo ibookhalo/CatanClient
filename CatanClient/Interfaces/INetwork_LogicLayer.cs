@@ -7,7 +7,7 @@ using Catan.Network.Messaging;
 
 namespace Catan.Client.Interfaces
 {
-    interface ILogicLayer_NetworkLayer
+    interface INetwork_LogicLayer
     {
         void ClientConnectToServerError(Exception ex);
         void ClientConnectedToServerSuccessfully();
