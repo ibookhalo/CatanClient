@@ -124,6 +124,7 @@ namespace Catan.Client.PresentationLayer
             {
                 SetAntzahlKartenByLandfeldTyp((KartenContainer.Rohstoffkarte)rohstoffkarte, CatanClient.KartenContainer.GetAnzahlByRohstoffkarte((KartenContainer.Rohstoffkarte)rohstoffkarte));
             }
+            lblSiegpunkte.Text = this.CatanClient.Siegpunkte.ToString();
         }
 
         private void SetAntzahlKartenByLandfeldTyp(Catan.Game.KartenContainer.Rohstoffkarte rohstoff, int punkte)

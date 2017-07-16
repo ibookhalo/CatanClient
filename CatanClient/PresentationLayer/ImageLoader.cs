@@ -43,5 +43,6 @@ namespace Catan.Client.PresentationLayer
             cachedSiedlungen.Add(new KeyValuePair<Color, Image>(color, siedlungImage));
             return siedlungImage;
         }
+
     }
 }

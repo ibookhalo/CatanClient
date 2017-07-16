@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Catan.Client.PresentationLayer
 {
-    class EdgeTexture:Texture
+    public class EdgeTexture:Texture,ICloneable
     {
         public PointF Point1 { private set; get; }
         public PointF Point2 { private set; get; }
@@ -39,6 +39,11 @@ namespace Catan.Client.PresentationLayer
         public override void Draw(Graphics graphics)
         {
             graphics.DrawPolygon(Pen, new PointF[] { Point1, Point2, Point4, Point3 });
+        }
+
+        public object Clone()
+        {
+            return new PresentationLayer.EdgeTexture(Point1, Point2, Point3, Point4,Pen.Clone() as Pen);
         }
     }
 }

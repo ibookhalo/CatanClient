@@ -34,6 +34,5 @@ namespace Catan.Client.PresentationLayer
             this.Pen = pen;
         }
         public abstract void Draw(Graphics graphics);
-
     }
 }

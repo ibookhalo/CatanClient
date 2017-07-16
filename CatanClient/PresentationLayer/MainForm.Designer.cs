@@ -38,6 +38,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pbLoading = new System.Windows.Forms.PictureBox();
             this.lblWaitingForClients = new System.Windows.Forms.Label();
+            this.tbEmail = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbLoading)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,12 +47,12 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Papyrus", 36F);
-            this.label1.Location = new System.Drawing.Point(98, 212);
+            this.label1.Location = new System.Drawing.Point(98, 143);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(191, 76);
+            this.label1.Size = new System.Drawing.Size(253, 76);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Server:";
+            this.label1.Text = "Server-IP:";
             // 
             // tbServerIPAddress
             // 
@@ -58,7 +60,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbServerIPAddress.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbServerIPAddress.Font = new System.Drawing.Font("OCR A Extended", 32F);
-            this.tbServerIPAddress.Location = new System.Drawing.Point(370, 226);
+            this.tbServerIPAddress.Location = new System.Drawing.Point(370, 156);
             this.tbServerIPAddress.Margin = new System.Windows.Forms.Padding(2);
             this.tbServerIPAddress.MaxLength = 14;
             this.tbServerIPAddress.Name = "tbServerIPAddress";
@@ -71,19 +73,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbPassword.Font = new System.Drawing.Font("OCR A Extended", 32F);
-            this.tbPassword.Location = new System.Drawing.Point(370, 304);
+            this.tbPassword.Location = new System.Drawing.Point(370, 291);
             this.tbPassword.Margin = new System.Windows.Forms.Padding(2);
             this.tbPassword.MaxLength = 10;
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(324, 45);
-            this.tbPassword.TabIndex = 2;
+            this.tbPassword.TabIndex = 3;
             this.tbPassword.UseSystemPasswordChar = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Papyrus", 36F);
-            this.label2.Location = new System.Drawing.Point(98, 290);
+            this.label2.Location = new System.Drawing.Point(98, 277);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(231, 76);
@@ -121,18 +123,18 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbNickname.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbNickname.Font = new System.Drawing.Font("OCR A Extended", 32F);
-            this.tbNickname.Location = new System.Drawing.Point(370, 382);
+            this.tbNickname.Location = new System.Drawing.Point(370, 354);
             this.tbNickname.Margin = new System.Windows.Forms.Padding(2);
             this.tbNickname.MaxLength = 24;
             this.tbNickname.Name = "tbNickname";
             this.tbNickname.Size = new System.Drawing.Size(324, 45);
-            this.tbNickname.TabIndex = 3;
+            this.tbNickname.TabIndex = 4;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Papyrus", 36F);
-            this.label4.Location = new System.Drawing.Point(98, 368);
+            this.label4.Location = new System.Drawing.Point(98, 340);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(248, 76);
@@ -163,12 +165,38 @@
             this.lblWaitingForClients.Text = "Auf Clients warten ...";
             this.lblWaitingForClients.Visible = false;
             // 
+            // tbEmail
+            // 
+            this.tbEmail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbEmail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbEmail.Font = new System.Drawing.Font("OCR A Extended", 32F);
+            this.tbEmail.Location = new System.Drawing.Point(370, 223);
+            this.tbEmail.Margin = new System.Windows.Forms.Padding(2);
+            this.tbEmail.MaxLength = 10;
+            this.tbEmail.Name = "tbEmail";
+            this.tbEmail.Size = new System.Drawing.Size(324, 45);
+            this.tbEmail.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Papyrus", 36F);
+            this.label5.Location = new System.Drawing.Point(98, 210);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(200, 76);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "E-Mail:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.SandyBrown;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(806, 648);
+            this.Controls.Add(this.tbEmail);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.lblWaitingForClients);
             this.Controls.Add(this.pbLoading);
             this.Controls.Add(this.tbNickname);
@@ -202,6 +230,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pbLoading;
         private System.Windows.Forms.Label lblWaitingForClients;
+        private System.Windows.Forms.TextBox tbEmail;
+        private System.Windows.Forms.Label label5;
     }
 }
 

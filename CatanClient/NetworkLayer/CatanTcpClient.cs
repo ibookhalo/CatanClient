@@ -16,7 +16,7 @@ namespace Catan.Client.NetworkLayer
         private INetwork_LogicLayer iLogicLayer_NetworkLayer;
         public TcpClient TcpClient { private set; get; }
         private IPAddress serverIpAddress;
-        private const ushort SERVER_PORT = 123;
+        private const ushort SERVER_PORT = 1234;
         private const string AUTH_ERROR_EXCEPTION_MSG = "Fehler bei der Authentifizierung";
 
 
@@ -56,6 +56,7 @@ namespace Catan.Client.NetworkLayer
             }
             
         }
+
         private void NetMessageWriter_CatanClientAuth_WriteCompleted(object obj, NetworkMessageWriterWriteCompletedEventArgs e)
         {
             NetworkMessageReader netMessageReader = new NetworkMessageReader(TcpClient);

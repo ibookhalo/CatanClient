@@ -105,6 +105,12 @@
     <Compile Include="PresentationLayer\StrasseEventArgs.cs" />
     <Compile Include="PresentationLayer\StrasseTexture.cs" />
     <Compile Include="PresentationLayer\Texture.cs" />
+    <Compile Include="PresentationLayer\WinnerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PresentationLayer\WinnerControl.Designer.cs">
+      <DependentUpon>WinnerControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="PresentationLayer\MainForm.resx">
@@ -112,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PresentationLayer\PlayerInformationControl.resx">
       <DependentUpon>PlayerInformationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PresentationLayer\WinnerControl.resx">
+      <DependentUpon>WinnerControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -207,6 +216,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Street.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\winner.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\water_texture.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

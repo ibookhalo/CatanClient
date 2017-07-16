@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 
 namespace Catan.Client.PresentationLayer
 {
-    class HexagonTexture:Texture
+    public class HexagonTexture:Texture
     {
         private bool isBackgroundImageProccessed;
         private bool isPickTop;

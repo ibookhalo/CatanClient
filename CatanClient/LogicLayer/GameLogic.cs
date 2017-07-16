@@ -9,6 +9,7 @@ using System.Net;
 using Catan.Network.Messaging;
 using Catan.Game;
 using System.Net.Sockets;
+using System.Net.Mail;
 
 namespace Catan.Client.LogicLayer
 {
@@ -34,10 +35,10 @@ namespace Catan.Client.LogicLayer
         {
             this.iPresentationLayer.WaitForClientsToConnectWithServer();
         }
-        public void ConnectToCatanServerAsync(IPAddress serverIp,string authPass,string playerName)
+        public void ConnectToCatanServerAsync(IPAddress serverIp,string mail,string pass,string playerName)
         {
             this.iNetworkLayer = new NetworkLayer.CatanTcpClient(serverIp, this);
-            this.iNetworkLayer.ConnectToCatanServerAsync(new Network.Messaging.CatanClientAuthenticationRequestMessage(authPass, playerName));
+            this.iNetworkLayer.ConnectToCatanServerAsync(new Network.Messaging.CatanClientAuthenticationRequestMessage(mail,pass, playerName));
         }
 
         public void ClientReceivedMessageCompleted(NetworkMessage networkMessage)
@@ -96,9 +97,16 @@ namespace Catan.Client.LogicLayer
             iNetworkLayer.SendMessage(new Network.Messaging.CatanClientStateChangeMessage(newSpielFiguren,null,null, myCientID, false));
         }
 
-        public void BaueStrasse(StrasseTexture clickedStrasse)
+        public void BaueStrasse(StrasseTexture strasse)
         {
-            throw new NotImplementedException();
+            var newSpielFiguren = new List<SpielFigur>();
+            newSpielFiguren.Add(new Catan.Game.Strasse(strasse.HexagonPositionHexagonPoint.HexagonPosition, new HexagonEdge(null, null, strasse.HexagonPositionHexagonPoint.HexagonPoint.Index)));
+            iNetworkLayer.SendMessage(new CatanClientStateChangeMessage(newSpielFiguren, null, null, myCientID, false));
+        }
+
+        public void TurnDone()
+        {
+            iNetworkLayer.SendMessage(new CatanClientStateChangeMessage(null, null, null, myCientID, true));
         }
     }
 }

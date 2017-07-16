@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Catan.Game;
+using System.Net.Mail;
 
 namespace Catan.Client.PresentationLayer
 {
@@ -34,8 +35,8 @@ namespace Catan.Client.PresentationLayer
         }
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            tbNickname.Text = "test";
-            tbPassword.Text = "ibo";
+            tbPassword.Text = "test";
+            tbEmail.Text = "test1@catan.de";
             tbServerIPAddress.Text = "127.0.0.1";
             if (string.IsNullOrWhiteSpace(tbServerIPAddress.Text) || string.IsNullOrWhiteSpace(tbPassword.Text) || string.IsNullOrWhiteSpace(tbNickname.Text))
             {
@@ -44,14 +45,14 @@ namespace Catan.Client.PresentationLayer
             else
             {
                 IPAddress serverIp;
-                if (IPAddress.TryParse(tbServerIPAddress.Text, out serverIp))
+                if (IPAddress.TryParse(tbServerIPAddress.Text, out serverIp) && tbEmail.TextLength>0)
                 {
-                    iPresentationLayer_LogicLayer.ConnectToCatanServerAsync(serverIp, tbPassword.Text, tbNickname.Text);
+                    iPresentationLayer_LogicLayer.ConnectToCatanServerAsync(serverIp,tbEmail.Text, tbPassword.Text, tbNickname.Text);
                     setUIMode(UIMode.LoadingDuringConnecting);
                 }
                 else
                 {
-                    MessageBoxHelper.ShowErrorMessage(new Exception("Bitte eine gültige Server-Adresse eingeben !"));
+                    MessageBoxHelper.ShowErrorMessage(new Exception("Bitte eine gültige Server-IP-Adresse / Password eingeben !"));
                 }
             }
         }
@@ -67,7 +68,7 @@ namespace Catan.Client.PresentationLayer
 
                     pbLoading.Visible = isLoading;
                     btnConnect.Visible = !isLoading;
-                    tbNickname.Enabled = tbPassword.Enabled = tbServerIPAddress.Enabled = !isLoading;
+                    tbNickname.Enabled = tbPassword.Enabled =tbEmail.Enabled= tbServerIPAddress.Enabled = !isLoading;
                     lblWaitingForClients.Visible = false;
                 }
                 else if (uiMode == UIMode.WaitingForClientsAfterConnectingToServer)
@@ -102,11 +103,33 @@ namespace Catan.Client.PresentationLayer
 
             executeUICodeThreadSafe(delegate
             {
+                if (gameStateMessage.Winner!=null)
+                {
+                    showWinner(gameStateMessage.Winner);
+                    return;
+                }
                 updatePlayerInfoControls();
                 gamePanel.DrawSpielFiguren(gameStateMessage.Clients);
             });
         }
-        
+
+        private void showWinner(CatanClient winner)
+        {
+            this.Controls.Clear();
+            string message = string.Empty;
+
+            if (iPresentationLayer_LogicLayer.GetMyClientID()==winner.ID)
+            {
+                message = $"Du hast gewonnen !!!";
+            }
+            else
+            {
+                message = $"Spieler: {winner.Name}  hat gewonnen !!!";
+            }
+            MessageBox.Show(message, "Finish", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
+        }
+
         private void updatePlayerInfoControls()
         {
             // Den aktuellen Spieler markieren und die restlichen disablen ....
@@ -244,7 +267,7 @@ namespace Catan.Client.PresentationLayer
 
         private void PlayerInfoControl_OnClickTurndone(object ob, PlayerControlEventArg e)
         {
-            
+            iPresentationLayer_LogicLayer.TurnDone();
         }
 
         private void PlayerInfoControl_OnClickSiedlungbauen(object ob, PlayerControlEventArg e)
